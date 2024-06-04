@@ -1,174 +1,114 @@
-# off_highway_uss
+# off_highway_sensor_drivers
 
-The off_highway_uss package provides a receiver node to receive and decode CAN frames of the Bosch
-Ultrasonic Sensor System (USS) Off-Highway into ROS messages - it implements an
-`off_highway_can::Receiver`. Furthermore, the package provides a sender node to encode and send
-needed USS input data as CAN frames - an implementation of an `off_highway_can::Sender`.
+This project provides ROS drivers for Bosch Off-Highway sensor systems.
 
-Further information on the Bosch USS Off-Highway, it's inputs, outputs and how they can be
-interpreted can be found in the corresponding [Technical Customer Documentation (TCD) of the sensor
-system](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/ultrasonic-sensor-systems-ohw/).
+The off_highway_sensor_drivers package is developed for ROS 2 Humble on Ubuntu 22.04.
 
-## Supported devices
+The [**off_highway_sensor_drivers**](off_highway_sensor_drivers/package.xml) package acts as
+metapackage for all of the following packages.
 
-| **Device name** | **Part Number** | **Description** |
-| - | - | - |
-| Ultrasonic Sensor System OHW Premium | - F037.000.125  (series) <br> - F037.B00.672-01 (sample) <br> both of it from software version SW2.0.0 | - Ultrasonic sensor system with up to 12 sensors <br> - Up to 20 objects and up to 36 distances <br> - Object and distance output on automotive CAN is supported |
-| Ultrasonic Sensor System OHW Entry | - F037.000.145 (series) <br> - F037.000.105 (series - 12V version) <br> both of it from software version SW2.0.0 | - Ultrasonic sensor system with up to 12 sensors <br> - Up to 36 distances <br> - Distance output on automotive CAN is supported |
+## Ethernet Based Drivers
 
-Further information: [Ultrasonic system variants and
+- [**off_highway_premium_radar_sample**](off_highway_premium_radar_sample/README.md): Driver library
+  and node for the Bosch Radar Off-Highway Premium Sample Sample
+- [**off_highway_premium_radar_sample_msgs**](off_highway_premium_radar_sample_msgs/README.md): The
+  custom message interface for the off_highway_premium_radar_sample package
+
+For further information, have a look at the linked package readmes.
+
+## CAN Based Drivers
+
+- [**off_highway_can**](off_highway_can/README.md): Library containing receiver and sender
+  classes to decode / encode sensor CAN frames
+- [**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md): Receiver
+  node for the Bosch General Purpose Radar Off-Highway (GPR)
+- [**off_highway_general_purpose_radar_msgs**](off_highway_general_purpose_radar_msgs/README.md):
+  The custom message interface for the Bosch General Purpose Radar Off-Highway (GPR)
+- [**off_highway_radar**](off_highway_radar/README.md): Receiver and sender nodes for the Bosch
+  Radar Off-Highway
+- [**off_highway_radar_msgs**](off_highway_radar_msgs/README.md): The custom message interface for
+  the off_highway_radar package
+- [**off_highway_uss**](off_highway_uss/README.md): Receiver and sender nodes for the Bosch
+  Ultrasonic Sensor System Off-Highway
+- [**off_highway_uss_msgs**](off_highway_uss_msgs/README.md): The custom message interface for the
+  off_highway_uss package
+
+The CAN communication based sensors were tested in a 500 kBd CAN configuration.
+
+The CAN communication based drivers offer the possibility to [log processing cycle
+times](off_highway_can/README.md). This allows you to check if your hardware in combination with
+these drivers is capable of processing your system's specific CAN load.
+
+For further information, have a look at the linked package readmes.
+
+### Architecture
+
+The most relevant packages for an application of the CAN communication based sensors are the
+[**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md),
+[**off_highway_radar**](off_highway_radar/README.md) and
+[**off_highway_uss**](off_highway_uss/README.md) packages, which provide a `receiver` node to
+convert CAN frames received from the sensor into ROS messages and a `sender` node to provide
+relevant information as CAN frames, converted from a ROS message interface.
+
+The sensor packages do **not** contain a CAN to ROS driver. Instead, their interface towards the
+sensor side are encoded as
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages.
+Such messages can be handled by e.g., the
+[ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) sender and receiver, which
+convert between such ROS messages and physical CAN frames through the SocketCAN driver. See the
+following diagram for a system overview:
+
+![Sensor Driver Architecture](doc/media/system_setup.drawio.svg "Sensor Driver Architecture")
+
+## Miscellaneous
+
+- [**off_highway_sensor_drivers_examples**](off_highway_sensor_drivers_examples/README.md): Sample
+  launch files and scripts to assist with further processing of sensor data.
+
+For further information, have a look at the linked package readme.
+
+## Further Information about the Hardware
+
+- [Radar OHW Premium](https://www.bosch-engineering.com/stories/stories-detailpages/hd-radar.html)
+- [Radar systems for off-highway
+  applications](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/radar-systems-ohw/)
+- [Ultrasonic system variants and
   sensors](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/ultrasonic-sensor-systems-ohw/)
 
-Contact: [**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Ultrasonic%20OHW%20Sensors)
+Or contact
+[**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Hardware%20Question).
 
-## Nodes
+## Intended Use
 
-### Receiver
+See [intended use](doc/intended_use.md).
 
-The USS receiver decodes CAN frames into an object list and a direct echo list, manages the current
-lists and publishes them cyclically.
+## License
 
-The parameter `use_j1939` defines whether automotive CAN or J1939 messages are expected. J1939
-support has the following limitations:
+Please see [LICENSE](LICENSE).
 
-* A fixed source address for the USS ECU must be configured. The dynamic assignment of source
-  addresses is not supported.
-* The receiver expects the parameter group numbers (PGNs) to be arranged as in the default DBC. A
-  rearrangement is only supported as a shift of the entire block. Moving individual PGNs is not
-  supported. Be aware that the PGN is only bit 8 to 23 of the extended CAN ID.
+## Build
 
-All received messages are checked for their cyclic redundancy check (CRC), rolling message counter
-and age (message not older than parameter `allowed_age`). If any of these checks do not succeed the
-received message is not further processed and skipped.
+### Prerequisites
 
-The relevant USS CAN frame IDs to process (`object_base_id`, `direct_echo_base_id`,
-`max_detection_range_id` and `info_id`) are calculated from the `id_offset` (automotive CAN) or
-`pgn_offset` (J1939) parameter with constant offsets. It should correspond to the value configured
-in the USS ECU and needs to be adapted for the specific bus setup. When using J1939, the receiver
-also checks whether the source address contained in the message matches the value of the
-`source_address` parameter. If multiple USS systems need to be decoded on the same bus just launch
-multiple receiver nodes with individual `id_offset` (automotive CAN) or `pgn_offset` and
-`source_address` (J1939) parameters.
+Install:
 
-The object data is published as a list of objects or as a point cloud and contains up to 20 objects
-(sensor limit). Only valid objects in the list are published (type not `TYPE_NONE`). Line objects in
-the point cloud format are sampled between their first and second position into individual points
-based on the `line_sample_distance` parameter. If this parameter is zero, only the end points of the
-line segment are put in the point cloud.
+- Ubuntu jammy 22.04
+- ROS humble
 
-An object CAN frame is multiplexed by the USS, so that the same CAN frame ID is used for two
-objects. Thus, for uniqueness, the `id` fields of an object in both published list formats are
-computed by adding the multiplexor value times ten to the the enumeration the CAN frame IDs starting
-from the `object_base_id` as zero. This results in an object `id` in the range [0, 20).
+### Install Dependencies
 
-The direct echo data is published as a list of direct echos and contains up to 12 direct echos
-(fills up at start till one set is received). The echo's `id` field is the enumeration of the CAN
-frame IDs starting from the `direct_echo_base_id` as zero. This results in an echo `id` in the range
-[0, 12).
+Clone this repository into your workspace and execute in it:
 
-The echo data list is accompanied by the `max_detection_range` message, which contains the current
-maximum detection range for all 12 individual ultrasonic sensors as array.
+```bash
+rosdep update && rosdep install --from-paths src --ignore-src -r -y
+```
 
-If the receiver node does not receive anything within a configured period (parameter `timeout`), it
-will publish a diagnostic error on `/diagnostics`. Also, the sensor information CAN frame is
-published and checked as diagnostic status of the USS. On error, the node publishes a diagnostic
-error.
+### Compile
 
-#### Subscribed Topics
+Execute in your workspace
 
-* **from_can_bus
-  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
-  * USS CAN frames to decode
+```bash
+colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Release'
+```
 
-#### Published Topics
-
-* **objects
-  ([`off_highway_uss_msgs/Objects`](../off_highway_uss_msgs/msg/Objects.msg))**
-  * Update Rate: configurable with `publish_frequency`
-  * Contains current object list of USS as custom message containing the same information as each
-    object's CAN frame. Mapping to the respective CAN frame and multiplexor value is done via the
-    `id` field.
-* **objects_pcl
-  ([`sensor_msgs/PointCloud2`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html))**
-  * Update Rate: configurable with `publish_frequency`
-  * Contains current object list of USS as point cloud. Line objects are sampled with
-    `line_sample_distance` to equidistant points along the first and second position. Mapping to the
-    respective CAN frame and multiplexor value is done via the `id` field.
-* **direct_echos
-  ([`off_highway_uss_msgs/DirectEchos`](../off_highway_uss_msgs/msg/DirectEchos.msg))**
-  * Update Rate: configurable with `publish_frequency`
-  * Contains current direct echo list of USS as custom message containing the same information as
-    each echo's CAN frame. Mapping to the respective CAN frame is done via the `id` field.
-* **maximum_detection_range
-  ([`off_highway_uss_msgs/MaxDetectionRange`](../off_highway_uss_msgs/msg/MaxDetectionRange.msg))**
-  * Update Rate: On each sensor maximum detection range CAN frame
-  * Contains the current maximum detection range of USS as custom message containing the same
-    information as the respective CAN frame.
-* **info
-  ([`off_highway_uss_msgs/Information`](../off_highway_uss_msgs/msg/Information.msg))**
-  * Update Rate: On each sensor information CAN frame
-  * Contains current sensor information message containing the same information as the respective
-    CAN frame.
-* **/diagnostics
-  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
-  * Update Rate: On each sensor information CAN frame or if receiver timed out periodically with
-    timeout period
-  * Diagnostic status contains statuses from the latest received sensor information and timeout
-    status.
-
-#### Parameters
-
-See [receiver_params.yaml](config/receiver_params.yaml).
-
-### Sender
-
-The USS sender listens for ROS ambient temperature messages as input and encodes and publishes these
-as CAN frame.
-
-In the case that there is no ambient temperature reading available, the USS can be configured with a
-fixed value (see TCD) and this sender node is not needed.
-
-The CAN temperature signal can only encode the range of [-40&deg;C, 87&deg;C], ROS messages
-containing temperature values outside of this range are discarded and not encoded / published.
-Furthermore, if the ROS temperature message is too old (parameter `allowed_age`) it is discarded,
-too.
-
-The relevant USS CAN frame ID to publish the temperature is specified by the
-`outside_temperature_id` parameter. This parameter needs to correspond to the vehicle data ID for
-the specific bus setup. If multiple USS systems are connected on the same bus, a single USS sender
-is sufficient as long as these USS systems expect the vehicle data frame on the same ID (in contrast
-to multiple receivers).
-
-If the sender node does not receive anything valid within a configured period (parameter `timeout`),
-it will publish a diagnostic error on `/diagnostics`.
-
-#### Subscribed Topics
-
-* **temperature
-  ([`sensor_msgs/Temperature`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Temperature.html))**
-  * Ambient temperature is sent to the USS for compensating readings
-
-#### Published Topics
-
-* **to_can_bus
-  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
-  * Encoded USS CAN frames
-* **/diagnostics
-  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
-  * Update Rate: 1 Hz or if sender timed out periodically with timeout period
-  * Diagnostic status only contains timeout status
-
-#### Parameters
-
-See [sender_params.yaml](config/sender_params.yaml).
-
-## Launch files
-
-* **[receiver_launch](launch/receiver_launch.py)**: Starts the receiver with the given parameters.
-  * Arguments:
-    * **params**: Path to ROS YAML parameter file to load for receiver. If not provided, default
-      parameters from this package are loaded.
-* **[sender_launch](launch/sender_launch.py)**: Starts the sender with the given parameters.
-  * Arguments:
-    * **params**: Path to ROS YAML parameter file to load for sender. If not provided, default
-      parameters from this package are loaded.
+for using colcon.
