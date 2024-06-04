@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>off_highway_can</name>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
   <description>The off_highway_can package</description>
   <maintainer email="robin.petereit@de.bosch.com">Robin Petereit</maintainer>
   <license>Apache-2.0, MIT</license>
@@ -16,13 +16,9 @@
   <depend>diagnostic_updater</depend>
   <depend>rclcpp</depend>
 
-  <test_depend>ament_cmake_copyright</test_depend>
-  <test_depend>ament_cmake_cppcheck</test_depend>
-  <test_depend>ament_cmake_cpplint</test_depend>
-  <test_depend>ament_cmake_lint_cmake</test_depend>
-  <test_depend>ament_cmake_uncrustify</test_depend>
-  <test_depend>ament_cmake_xmllint</test_depend>
   <test_depend>ament_cmake_gtest</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
 
   <export>
     <build_type>ament_cmake</build_type>
