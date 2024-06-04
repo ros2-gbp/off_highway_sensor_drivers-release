@@ -2,6 +2,9 @@
 Changelog for package off_highway_general_purpose_radar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.1 (2024-06-04)
+------------------
+
 0.6.0 (2024-05-14)
 ------------------
 * Convert general purpose radar from node to component
