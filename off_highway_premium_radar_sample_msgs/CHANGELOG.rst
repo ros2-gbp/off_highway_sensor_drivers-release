@@ -2,6 +2,9 @@
 Changelog for package off_highway_premium_radar_sample_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.1 (2024-06-04)
+------------------
+
 0.6.0 (2024-05-14)
 ------------------
 * Rename premium radar driver to sample

@@ -2,6 +2,9 @@
 Changelog for package off_highway_uss
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.6.1 (2024-06-04)
+------------------
+
 0.6.0 (2024-05-14)
 ------------------
 * Switch from deprecated signature to const shared_ptr reference while still supporting efficient intra-process communication
