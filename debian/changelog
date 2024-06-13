@@ -1,0 +1,31 @@
+ros-humble-off-highway-uss-msgs (0.6.2-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 12 Jun 2024 22:00:00 -0000
+
+ros-humble-off-highway-uss-msgs (0.6.1-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 03 Jun 2024 22:00:00 -0000
+
+ros-humble-off-highway-uss-msgs (0.6.0-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 13 May 2024 22:00:00 -0000
+
+ros-humble-off-highway-uss-msgs (0.5.1-1jammy) jammy; urgency=high
+
+  * Disable irrelevant warnings for Clang
+    Anonymous structs are used in PCL for type punning:
+    https://github.com/PointCloudLibrary/pcl/issues/2303
+    Subobject braces are not needed:
+    https://bugs.llvm.org/show_bug.cgi?id=21629
+    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=25137
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 26 Mar 2024 23:00:00 -0000
+
+
