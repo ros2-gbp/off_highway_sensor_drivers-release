@@ -1,0 +1,12 @@
+Source: ros-humble-off-highway-radar
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), libpcl-common1.12, ros-humble-ament-cmake, ros-humble-ament-cmake-ros <!nocheck>, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-can-msgs, ros-humble-off-highway-can, ros-humble-off-highway-radar-msgs, ros-humble-pcl-conversions, ros-humble-pcl-ros, ros-humble-rclcpp, ros-humble-rclcpp-components, ros-humble-sensor-msgs, ros-humble-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-humble-off-highway-radar
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpcl-common1.12, ros-humble-can-msgs, ros-humble-off-highway-can, ros-humble-off-highway-radar-msgs, ros-humble-pcl-conversions, ros-humble-pcl-ros, ros-humble-rclcpp, ros-humble-rclcpp-components, ros-humble-sensor-msgs, ros-humble-ros-workspace
+Description: The off_highway_radar package
