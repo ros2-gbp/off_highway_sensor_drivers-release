@@ -1,114 +1,84 @@
-# off_highway_sensor_drivers
+# off_highway_can
 
-This project provides ROS drivers for Bosch Off-Highway sensor systems.
+The off_highway_can package provides a C++ library to
 
-The off_highway_sensor_drivers package is developed for ROS 2 Humble on Ubuntu 22.04.
+* receive `can_msgs/Frame` ROS messages and decode their bytes into custom C++ message structures,
+* encode the bytes of `can_msgs/Frame` ROS messages from custom C++ message structures and send
+  them.
 
-The [**off_highway_sensor_drivers**](off_highway_sensor_drivers/package.xml) package acts as
-metapackage for all of the following packages.
+The list of message structures containing the definition of a CAN message and signals need to be
+filled by derived classes for CAN node specific functionality. The more generic handling of a cyclic
+redundancy check and a rolling message counter per message is provided by the library. Have a look
+directly into the [CAN message structure definition](include/off_highway_can/can_message.hpp) for
+further information.
 
-## Ethernet Based Drivers
+## Classes
 
-- [**off_highway_premium_radar_sample**](off_highway_premium_radar_sample/README.md): Driver library
-  and node for the Bosch Radar Off-Highway Premium Sample Sample
-- [**off_highway_premium_radar_sample_msgs**](off_highway_premium_radar_sample_msgs/README.md): The
-  custom message interface for the off_highway_premium_radar_sample package
+### Receiver
 
-For further information, have a look at the linked package readmes.
+The `off_highway_can::Receiver` is an abstract base class and needs to be derived for specific
+sensor types and behavior. It provides the functionality to process
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages and
+decode configured ones based on provided message definitions. The decoded signal values are
+forwarded to the derived class for user-defined processing of them.
 
-## CAN Based Drivers
+The processing chain is based completely on message callbacks and thus event-based. The needed
+processing time per message can be logged as ROS debug message at runtime with the compile time
+option[`COMPILE_DEBUG_LOG`](CMakeLists.txt).
 
-- [**off_highway_can**](off_highway_can/README.md): Library containing receiver and sender
-  classes to decode / encode sensor CAN frames
-- [**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md): Receiver
-  node for the Bosch General Purpose Radar Off-Highway (GPR)
-- [**off_highway_general_purpose_radar_msgs**](off_highway_general_purpose_radar_msgs/README.md):
-  The custom message interface for the Bosch General Purpose Radar Off-Highway (GPR)
-- [**off_highway_radar**](off_highway_radar/README.md): Receiver and sender nodes for the Bosch
-  Radar Off-Highway
-- [**off_highway_radar_msgs**](off_highway_radar_msgs/README.md): The custom message interface for
-  the off_highway_radar package
-- [**off_highway_uss**](off_highway_uss/README.md): Receiver and sender nodes for the Bosch
-  Ultrasonic Sensor System Off-Highway
-- [**off_highway_uss_msgs**](off_highway_uss_msgs/README.md): The custom message interface for the
-  off_highway_uss package
+Furthermore, the `off_highway_can::Receiver` provides a watchdog which checks whether any configured
+message was received in the period of time defined by the parameter `timeout` and sends a diagnostic
+error on the `/diagnostics` topic when a timeout occurs.
 
-The CAN communication based sensors were tested in a 500 kBd CAN configuration.
+#### Subscribed Topics
 
-The CAN communication based drivers offer the possibility to [log processing cycle
-times](off_highway_can/README.md). This allows you to check if your hardware in combination with
-these drivers is capable of processing your system's specific CAN load.
+* **from_can_bus
+  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
+  * CAN frames to decode
 
-For further information, have a look at the linked package readmes.
+#### Published Topics
 
-### Architecture
+* **/diagnostics
+  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
+  * Update Rate: normally 1 Hz, can be forced
+  * Diagnostic error in base class only contains timeout status
 
-The most relevant packages for an application of the CAN communication based sensors are the
-[**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md),
-[**off_highway_radar**](off_highway_radar/README.md) and
-[**off_highway_uss**](off_highway_uss/README.md) packages, which provide a `receiver` node to
-convert CAN frames received from the sensor into ROS messages and a `sender` node to provide
-relevant information as CAN frames, converted from a ROS message interface.
+#### Parameters
 
-The sensor packages do **not** contain a CAN to ROS driver. Instead, their interface towards the
-sensor side are encoded as
-[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages.
-Such messages can be handled by e.g., the
-[ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) sender and receiver, which
-convert between such ROS messages and physical CAN frames through the SocketCAN driver. See the
-following diagram for a system overview:
+See [receiver_params.yaml](config/receiver_params.yaml).
 
-![Sensor Driver Architecture](doc/media/system_setup.drawio.svg "Sensor Driver Architecture")
+### Sender
 
-## Miscellaneous
+The `off_highway_can::Sender` is an abstract base class and needs to be derived for specific
+behavior. It provides the functionality to send
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages by
+encoding configured CAN messages as bytes based on provided message definitions. The encoded signal
+values are published to the `to_can_bus` topic.
 
-- [**off_highway_sensor_drivers_examples**](off_highway_sensor_drivers_examples/README.md): Sample
-  launch files and scripts to assist with further processing of sensor data.
+The encoding and publishing chain is just a method call and thus event-based. The needed processing
+time to encode and publish all configured messages can be logged as ROS debug message at runtime
+with the compile time option[`COMPILE_DEBUG_LOG`](CMakeLists.txt).
 
-For further information, have a look at the linked package readme.
+Furthermore, the `off_highway_can::Sender` provides a watchdog which checks whether a ROS message
+was published in a defined by the parameter `timeout` and sends a diagnostic error on the
+`/diagnostics` topic when a timeout occurs.
 
-## Further Information about the Hardware
+#### Published Topics
 
-- [Radar OHW Premium](https://www.bosch-engineering.com/stories/stories-detailpages/hd-radar.html)
-- [Radar systems for off-highway
-  applications](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/radar-systems-ohw/)
-- [Ultrasonic system variants and
-  sensors](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/ultrasonic-sensor-systems-ohw/)
+* **to_can_bus
+  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
+  * Encoded CAN frames
+* **/diagnostics
+  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
+  * Update Rate: normally 1 Hz, can be forced
+  * Diagnostic status in base class only contains timeout status
 
-Or contact
-[**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Hardware%20Question).
+#### Parameters
 
-## Intended Use
+See [sender_params.yaml](config/sender_params.yaml).
 
-See [intended use](doc/intended_use.md).
+## Free and Open Source Software (FOSS)
 
-## License
-
-Please see [LICENSE](LICENSE).
-
-## Build
-
-### Prerequisites
-
-Install:
-
-- Ubuntu jammy 22.04
-- ROS humble
-
-### Install Dependencies
-
-Clone this repository into your workspace and execute in it:
-
-```bash
-rosdep update && rosdep install --from-paths src --ignore-src -r -y
-```
-
-### Compile
-
-Execute in your workspace
-
-```bash
-colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Release'
-```
-
-for using colcon.
+This library uses the [libcan-encode-decode](https://github.com/reinzor/libcan-encode-decode)
+library for encoding and decoding raw bytes into / from floating values. See the [FOSS
+documentation](foss_documentation/) for further information.
