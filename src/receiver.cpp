@@ -318,3 +318,6 @@ void Receiver::declare_and_get_parameters()
 }
 
 }  // namespace off_highway_general_purpose_radar
+
+#include "rclcpp_components/register_node_macro.hpp"
+RCLCPP_COMPONENTS_REGISTER_NODE(off_highway_general_purpose_radar::Receiver)
