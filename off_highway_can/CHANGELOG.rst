@@ -2,6 +2,17 @@
 Changelog for package off_highway_can
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.0 (2024-12-04)
+------------------
+* Update docs for CAN FD
+* Check matching lengths in decoding
+* Allow start bits in CAN FD range
+* Make CRC and message counter optional
+* Enable processing of CAN FD frames
+* Remove unused definitions
+* Do not force warnings as errors to fix rolling (#11)
+* Contributors: Robin Petereit, Tim Clephas
+
 0.6.3 (2024-07-09)
 ------------------
 

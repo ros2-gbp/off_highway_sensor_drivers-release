@@ -15,7 +15,10 @@
 
 #pragma once
 
+#include <type_traits>
+
 #include "off_highway_can/crc.hpp"
+#include "ros2_socketcan_msgs/msg/fd_frame.hpp"
 
 // Disable warnings from external header, we won't fix FOSS
 // TODO(rcp1-beg) Replace CAN encoding / decoding with own implementation
@@ -33,11 +36,17 @@ void Signal::decode(const FrameData & frame)
   value = ::decode(frame.data(), start_bit, length, is_big_endian, is_signed, factor, offset);
 }
 
+template<>
+void Signal::decode(const ros2_socketcan_msgs::msg::FdFrame::_data_type & frame);
+
 template<typename FrameData>
 void Signal::encode(FrameData & frame)
 {
   ::encode(frame.data(), value, start_bit, length, is_big_endian, is_signed, factor, offset);
 }
+
+template<>
+void Signal::encode(ros2_socketcan_msgs::msg::FdFrame::_data_type & frame);
 
 template<typename FrameData>
 bool MessageCounter::decode_and_check(const FrameData & frame_data)
@@ -56,6 +65,10 @@ bool MessageCounter::decode_and_check(const FrameData & frame_data)
 template<typename FrameData>
 void Message::encode(FrameData & frame)
 {
+  if constexpr (std::is_same_v<FrameData, ros2_socketcan_msgs::msg::FdFrame::_data_type>) {
+    frame.resize(length);
+  }
+
   for (auto & [_, signal] : signals) {
     signal.encode(frame);
   }
@@ -66,9 +79,13 @@ void Message::encode(FrameData & frame)
 template<typename FrameData>
 void Message::validate(FrameData & frame)
 {
-  message_counter.increase();
-  message_counter.encode(frame);
-  frame[crc_index] = calculateCRC(frame.data(), crc_index, frame.size());
+  if (message_counter) {
+    message_counter->increase();
+    message_counter->encode(frame);
+  }
+  if (crc_index) {
+    frame[*crc_index] = calculate_crc(frame);
+  }
 }
 
 
@@ -89,11 +106,27 @@ bool Message::decode(const FrameData & frame)
 template<typename FrameData>
 bool Message::valid(const FrameData & frame)
 {
-  if (frame[crc_index] != calculateCRC(frame.data(), crc_index, frame.size())) {
-    message_counter.first = true;
+  if (frame.size() != this->length) {
     return false;
   }
 
-  return message_counter.decode_and_check(frame);
+  if (crc_index && frame[*crc_index] != calculate_crc(frame)) {
+    if (message_counter) {
+      message_counter->first = true;
+    }
+    return false;
+  }
+
+  return !message_counter || message_counter->decode_and_check(frame);
 }
+
+template<typename FrameData>
+uint8_t Message::calculate_crc(const FrameData & frame)
+{
+  return calculateCRC(frame.data(), *crc_index, frame.size());
+}
+
+template<>
+uint8_t Message::calculate_crc(const ros2_socketcan_msgs::msg::FdFrame::_data_type & frame);
+
 }  // namespace off_highway_can
