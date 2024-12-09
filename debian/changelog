@@ -1,0 +1,45 @@
+ros-humble-off-highway-sensor-drivers-examples (0.7.0-1jammy) jammy; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Tue, 03 Dec 2024 23:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers-examples (0.6.3-1jammy) jammy; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Mon, 08 Jul 2024 22:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers-examples (0.6.2-1jammy) jammy; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Wed, 12 Jun 2024 22:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers-examples (0.6.1-1jammy) jammy; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Mon, 03 Jun 2024 22:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers-examples (0.6.0-1jammy) jammy; urgency=high
+
+  * Restructure README of examples package
+  * Use single container for driver and filter
+  * Rename premium radar driver to sample
+    Currently, the delivered Radar Off-Highway Premium and its firmware are just samples.
+    Separate package will be created for series firmware.
+  * Add example component to demonstrate extraction of velocity
+  * Update executable names for premium radar in launch
+  * Add launch argument for parameters and unify launch file names
+  * Contributors: Robin Petereit, Sarah Huber
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Mon, 13 May 2024 22:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers-examples (0.5.1-1jammy) jammy; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Tue, 26 Mar 2024 23:00:00 -0000
+
+
