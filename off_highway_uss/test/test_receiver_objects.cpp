@@ -66,10 +66,13 @@ public:
       // Publish
       publisher_->publish(can_msg_object);
 
-      // If object_type == 0, the object is not valid and won't be processed
-      if (test_object.object_type != 0) {
-        defined_object_ids++;
+      // If object type is none or SNA, the object is not valid and won't be processed in receiver
+      if (test_object.object_type == off_highway_uss_msgs::msg::Object::TYPE_NONE ||
+        test_object.object_type == off_highway_uss_msgs::msg::Object::TYPE_SNA)
+      {
+        continue;
       }
+      defined_object_ids++;
     }
   }
 
@@ -222,7 +225,7 @@ TEST_F(TestUssReceiver, testObjectsZero) {
   test_object_0.exist_probability = 0;
   test_object_0.position_second.x = 0;
   test_object_0.position_second.y = 0;
-  test_object_0.object_type = 1;  // Object is filtered out if type == 0
+  test_object_0.object_type = 1;  // Object is filtered out if type is 0 or 3
   test_objects.objects.push_back(test_object_0);
 
   publish_objects(test_objects);
@@ -240,7 +243,7 @@ TEST_F(TestUssReceiver, testObjectsMin) {
   test_object_min.exist_probability = 0;
   test_object_min.position_second.x = -1024 * kMetersToCentimeters;
   test_object_min.position_second.y = -1024 * kMetersToCentimeters;
-  test_object_min.object_type = 1;  // Object is filtered out if type == 0
+  test_object_min.object_type = 1;  // Object is filtered out if type is 0 or 3
   test_objects.objects.push_back(test_object_min);
 
   publish_objects(test_objects);
@@ -257,7 +260,12 @@ TEST_F(TestUssReceiver, testObjectsMax) {
   test_object_max.exist_probability = 7;
   test_object_max.position_second.x = 1022 * kMetersToCentimeters;
   test_object_max.position_second.y = 1022 * kMetersToCentimeters;
-  test_object_max.object_type = 3;  // Object is filtered out if type == 0
+  test_object_max.object_type = 1;  // Object is filtered out if type is 0 or 3, 1 to avoid filter
+  test_objects.objects.push_back(test_object_max);
+
+  // Add another object with different id and max type to test max type value and filter
+  test_object_max.id = 18;
+  test_object_max.object_type = 3;
   test_objects.objects.push_back(test_object_max);
 
   publish_objects(test_objects);
@@ -274,7 +282,7 @@ TEST_F(TestUssReceiver, testObjectsRand) {
   test_object_rand.exist_probability = 4;
   test_object_rand.position_second.x = -1024 * kMetersToCentimeters;
   test_object_rand.position_second.y = 1022 * kMetersToCentimeters;
-  test_object_rand.object_type = 2;  // Object is filtered out if type == 0
+  test_object_rand.object_type = 2;  // Object is filtered out if type is 0 or 3
   test_objects.objects.push_back(test_object_rand);
 
   publish_objects(test_objects);
@@ -291,7 +299,7 @@ TEST_F(TestUssReceiver, testObjectsType0) {
   test_object_type_0.exist_probability = 3;
   test_object_type_0.position_second.x = -300 * kMetersToCentimeters;
   test_object_type_0.position_second.y = 400 * kMetersToCentimeters;
-  test_object_type_0.object_type = 0;  // Object is filtered out if type == 0
+  test_object_type_0.object_type = 0;  // Object is filtered out if type is 0 or 3
   test_objects.objects.push_back(test_object_type_0);
 
   publish_objects(test_objects);
