@@ -13,7 +13,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "j1939.hpp"
 #include "off_highway_can/receiver.hpp"
 
 #include "diagnostic_msgs/msg/diagnostic_status.hpp"
@@ -22,8 +21,9 @@ namespace off_highway_can
 {
 Receiver::Receiver(
   const std::string & node_name,
-  const rclcpp::NodeOptions & options)
-: rclcpp::Node(node_name, options)
+  const rclcpp::NodeOptions & options,
+  bool use_fd)
+: rclcpp::Node(node_name, options), use_fd_(use_fd)
 {
   this->last_message_received_ = now();
   this->declare_and_get_parameters();
@@ -51,11 +51,17 @@ void Receiver::start()
 {
   initialize();
 
-  can_sub_ = create_subscription<can_msgs::msg::Frame>(
-    "from_can_bus",
-    100,
-    std::bind(&Receiver::callback_can, this, std::placeholders::_1)
-  );
+  if (use_fd_) {
+    can_sub_ = create_subscription<ros2_socketcan_msgs::msg::FdFrame>(
+      "from_can_bus_fd", 100,
+      std::bind(
+        &Receiver::callback_can<ros2_socketcan_msgs::msg::FdFrame>, this,
+        std::placeholders::_1));
+  } else {
+    can_sub_ = create_subscription<can_msgs::msg::Frame>(
+      "from_can_bus", 100,
+      std::bind(&Receiver::callback_can<can_msgs::msg::Frame>, this, std::placeholders::_1));
+  }
 
   watchdog_timer_ = rclcpp::create_timer(
     this,
@@ -78,47 +84,6 @@ void Receiver::callback_watchdog()
     force_diag_update();
     last_message_received_ = now();
   }
-}
-
-void Receiver::callback_can(const can_msgs::msg::Frame::ConstSharedPtr & frame)
-{
-#if (RCLCPP_LOG_MIN_SEVERITY <= RCLCPP_LOG_MIN_SEVERITY_DEBUG)
-  using std::chrono::steady_clock;
-  using std::chrono::duration;
-  auto start = steady_clock::now();
-#endif
-  auto id = frame->id;
-  if (use_j1939_) {
-    if (!is_j1939_source_address_matching(get_j1939_source_address(frame->id))) {
-      return;
-    }
-    id = get_j1939_pgn(frame->id);
-  }
-
-  // Check if received frame ID is from node
-  auto msg_it = messages_.find(id);
-  if (msg_it == messages_.end()) {
-    RCLCPP_DEBUG(
-      this->get_logger(), "Filtering of frame in %s took %f s", get_name(),
-      duration<double>(steady_clock::now() - start).count());
-    return;
-  }
-
-  Message & msg = msg_it->second;
-  if (!msg.decode(frame->data)) {
-    return;
-  }
-
-  last_message_received_ = now();
-  diag_updater_->force_update();
-
-  auto header = frame->header;
-  header.frame_id = node_frame_id_;
-  process(header, id, msg);
-
-  RCLCPP_DEBUG(
-    get_logger(), "Processing of frame in %s took %f s", get_name(),
-    duration<double>(steady_clock::now() - start).count());
 }
 
 Receiver::Messages Receiver::get_messages() const
