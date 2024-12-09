@@ -10,7 +10,7 @@ metapackage for all of the following packages.
 ## Ethernet Based Drivers
 
 - [**off_highway_premium_radar_sample**](off_highway_premium_radar_sample/README.md): Driver library
-  and node for the Bosch Radar Off-Highway Premium Sample Sample
+  and node for the Bosch Radar Off-Highway Premium Sample
 - [**off_highway_premium_radar_sample_msgs**](off_highway_premium_radar_sample_msgs/README.md): The
   custom message interface for the off_highway_premium_radar_sample package
 
@@ -47,15 +47,16 @@ The most relevant packages for an application of the CAN communication based sen
 [**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md),
 [**off_highway_radar**](off_highway_radar/README.md) and
 [**off_highway_uss**](off_highway_uss/README.md) packages, which provide a `receiver` node to
-convert CAN frames received from the sensor into ROS messages and a `sender` node to provide
-relevant information as CAN frames, converted from a ROS message interface.
+convert CAN (FD) frames received from the sensor into ROS messages and a `sender` node to provide
+relevant information as CAN (FD) frames, converted from a ROS message interface.
 
 The sensor packages do **not** contain a CAN to ROS driver. Instead, their interface towards the
 sensor side are encoded as
-[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages.
-Such messages can be handled by e.g., the
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) or
+[`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg)
+ROS messages. Such messages can be handled by e.g., the
 [ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) sender and receiver, which
-convert between such ROS messages and physical CAN frames through the SocketCAN driver. See the
+convert between such ROS messages and physical CAN (FD) frames through the SocketCAN driver. See the
 following diagram for a system overview:
 
 ![Sensor Driver Architecture](doc/media/system_setup.drawio.svg "Sensor Driver Architecture")
