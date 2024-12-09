@@ -2,6 +2,11 @@
 Changelog for package off_highway_uss_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.0 (2024-12-04)
+------------------
+* Add object type SNA and filter such objects
+* Contributors: Robin Petereit
+
 0.6.3 (2024-07-09)
 ------------------
 
