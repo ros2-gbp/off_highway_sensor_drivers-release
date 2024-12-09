@@ -2,9 +2,10 @@
 
 The off_highway_can package provides a C++ library to
 
-* receive `can_msgs/Frame` ROS messages and decode their bytes into custom C++ message structures,
-* encode the bytes of `can_msgs/Frame` ROS messages from custom C++ message structures and send
-  them.
+* receive `can_msgs/Frame` or `socketcan_msgs/FdFrame` ROS messages and decode their bytes into
+  custom C++ message structures,
+* encode the bytes of `can_msgs/Frame` or `socketcan_msgs/FdFrame` ROS messages from custom C++
+  message structures and send them.
 
 The list of message structures containing the definition of a CAN message and signals need to be
 filled by derived classes for CAN node specific functionality. The more generic handling of a cyclic
@@ -18,9 +19,13 @@ further information.
 
 The `off_highway_can::Receiver` is an abstract base class and needs to be derived for specific
 sensor types and behavior. It provides the functionality to process
-[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages and
-decode configured ones based on provided message definitions. The decoded signal values are
-forwarded to the derived class for user-defined processing of them.
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) or
+[`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg)
+ROS messages and decode configured ones based on provided message definitions. The decoded signal
+values are forwarded to the derived class for user-defined processing of them.
+
+The `off_highway_can::Receiver` allows to switch between normal and FD CAN frames via the
+constructor argument `use_fd`.
 
 The processing chain is based completely on message callbacks and thus event-based. The needed
 processing time per message can be logged as ROS debug message at runtime with the compile time
@@ -35,6 +40,11 @@ error on the `/diagnostics` topic when a timeout occurs.
 * **from_can_bus
   ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
   * CAN frames to decode
+  * Disabled by `use_fd` constructor argument
+* **from_can_bus_fd
+  ([`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg))**
+  * CAN FD frames to decode
+  * Enabled by `use_fd` constructor argument
 
 #### Published Topics
 
@@ -51,9 +61,13 @@ See [receiver_params.yaml](config/receiver_params.yaml).
 
 The `off_highway_can::Sender` is an abstract base class and needs to be derived for specific
 behavior. It provides the functionality to send
-[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) ROS messages by
-encoding configured CAN messages as bytes based on provided message definitions. The encoded signal
-values are published to the `to_can_bus` topic.
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) or
+[`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg)
+ROS messages by encoding configured CAN messages as bytes based on provided message definitions. The
+encoded signal values are published to the `to_can_bus` or `to_can_bus_fd` topic.
+
+The `off_highway_can::Sender` allows to switch between normal and FD CAN frames via the constructor
+argument `use_fd`.
 
 The encoding and publishing chain is just a method call and thus event-based. The needed processing
 time to encode and publish all configured messages can be logged as ROS debug message at runtime
@@ -68,6 +82,11 @@ was published in a defined by the parameter `timeout` and sends a diagnostic err
 * **to_can_bus
   ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
   * Encoded CAN frames
+  * Disabled by `use_fd` constructor argument
+* **to_can_bus_fd
+  ([`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg))**
+  * CAN FD frames to decode
+  * Enabled by `use_fd` constructor argument
 * **/diagnostics
   ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
   * Update Rate: normally 1 Hz, can be forced
