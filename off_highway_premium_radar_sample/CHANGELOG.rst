@@ -2,6 +2,11 @@
 Changelog for package off_highway_premium_radar_sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.0 (2024-12-04)
+------------------
+* Do not force warnings as errors to fix rolling (#11)
+* Contributors: Tim Clephas
+
 0.6.3 (2024-07-09)
 ------------------
 * Add missing dependency on PCL headers (#9)

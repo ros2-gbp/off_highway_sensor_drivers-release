@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>off_highway_can</name>
-  <version>0.6.3</version>
+  <version>0.7.0</version>
   <description>The off_highway_can package</description>
   <maintainer email="robin.petereit@de.bosch.com">Robin Petereit</maintainer>
   <license>Apache-2.0, MIT</license>
@@ -15,6 +15,7 @@
   <depend>can_msgs</depend>
   <depend>diagnostic_updater</depend>
   <depend>rclcpp</depend>
+  <depend>ros2_socketcan_msgs</depend>
 
   <test_depend>ament_cmake_gtest</test_depend>
   <test_depend>ament_lint_auto</test_depend>
