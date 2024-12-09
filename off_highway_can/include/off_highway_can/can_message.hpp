@@ -16,6 +16,7 @@
 #pragma once
 
 #include <cstdint>
+#include <optional>
 #include <string>
 #include <unordered_map>
 
@@ -73,8 +74,8 @@ struct Message
 {
   std::string name;
   uint8_t length{8};
-  uint8_t crc_index{7};
-  MessageCounter message_counter;
+  std::optional<uint8_t> crc_index{7};
+  std::optional<MessageCounter> message_counter{std::nullopt};
   std::unordered_map<std::string, Signal> signals;
 
   /**
@@ -94,16 +95,27 @@ struct Message
   /**
    * \brief Decode frame bits into signals.
    * \param frame Frame byte array
+   * \return False if decoding is invalid (CRC, message counter, length), true otherwise
    */
   template<typename FrameData>
   bool decode(const FrameData & frame);
 
   /**
-   * \brief Check frame by comparing CRC and message counter difference.
+   * \brief Check frame by comparing length, CRC and message counter difference.
    * \param frame Frame byte array
+   * \return False if array length not equal to message length, wrong CRC or message counter, true
+   * otherwise
    */
   template<typename FrameData>
   bool valid(const FrameData & frame);
+
+  /**
+   * \brief Compute CRC.
+   * \param frame Frame byte array
+   * \return CRC value
+   */
+  template<typename FrameData>
+  uint8_t calculate_crc(const FrameData & frame);
 };
 
 }  // namespace off_highway_can
