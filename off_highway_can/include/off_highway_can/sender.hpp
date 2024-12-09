@@ -22,21 +22,20 @@
 #include "rclcpp/node.hpp"
 #include "diagnostic_updater/diagnostic_updater.hpp"
 #include "can_msgs/msg/frame.hpp"
+#include "ros2_socketcan_msgs/msg/fd_frame.hpp"
 
 #include "can_message.hpp"
 
 namespace off_highway_can
 {
 /**
- * \brief Abstract sender class to encode CAN frames. Needs to be extended for specific CAN
+ * \brief Abstract sender class to encode CAN (FD) frames. Needs to be extended for specific CAN
  * messages.
  */
 class Sender : public rclcpp::Node
 {
 public:
-  using FrameId = can_msgs::msg::Frame::_id_type;
-  using FrameData = can_msgs::msg::Frame::_data_type;
-
+  using FrameId = uint32_t;
   using Messages = std::unordered_map<FrameId, Message>;
 
   using DiagTask =
@@ -45,10 +44,15 @@ public:
 
   /**
    * \brief Construct a new Sender object.
+   *
+   * \param node_name Name of the node
+   * \param options Node options
+   * \param use_fd Enable CAN FD frames
    */
   explicit Sender(
     const std::string & node_name = "sender",
-    const rclcpp::NodeOptions & options = rclcpp::NodeOptions());
+    const rclcpp::NodeOptions & options = rclcpp::NodeOptions(),
+    bool use_fd = false);
 
   /**
    * \brief Destroy the Sender object.
@@ -68,6 +72,15 @@ public:
 
 protected:
   /**
+   * \brief Encode message into CAN frame and send it.
+   * \param id Frame ID
+   * \param message Message to send
+   * \tparam Msg Type of ROS message to send
+   */
+  template<typename Msg>
+  void send_can(FrameId id, Message & message);
+
+  /**
    * \brief Add diagnostic task to composite task for including it in the diagnostic updater.
    *
    * \param task Task to add
@@ -80,6 +93,9 @@ protected:
   void force_diag_update();
 
   Messages messages_;
+
+  /// Use CAN FD frames, defaults to false
+  const bool use_fd_{false};
 
 private:
   /**
@@ -106,6 +122,8 @@ private:
   std::shared_ptr<diagnostic_updater::Updater> diag_updater_;
 
   rclcpp::Publisher<can_msgs::msg::Frame>::SharedPtr can_pub_;
+  rclcpp::Publisher<ros2_socketcan_msgs::msg::FdFrame>::SharedPtr fd_pub_;
+  std::function<void(Messages::value_type &)> send_msg_;
   rclcpp::Time last_message_sent_;
   rclcpp::TimerBase::SharedPtr watchdog_timer_;
 
@@ -115,3 +133,5 @@ private:
   double watchdog_frequency_;
 };
 }  // namespace off_highway_can
+
+#include "off_highway_can/impl/sender_impl.hpp"

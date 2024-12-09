@@ -19,13 +19,24 @@ namespace off_highway_can
 {
 Sender::Sender(
   const std::string & node_name,
-  const rclcpp::NodeOptions & options)
-: rclcpp::Node(node_name, options)
+  const rclcpp::NodeOptions & options,
+  bool use_fd)
+: rclcpp::Node(node_name, options), use_fd_(use_fd)
 {
   last_message_sent_ = now();
   declare_and_get_parameters();
 
-  can_pub_ = create_publisher<can_msgs::msg::Frame>("to_can_bus", 10);
+  if (use_fd_) {
+    fd_pub_ = create_publisher<ros2_socketcan_msgs::msg::FdFrame>("to_can_bus_fd", 10);
+    send_msg_ = [this](Messages::value_type & msg) {
+        this->send_can<ros2_socketcan_msgs::msg::FdFrame>(msg.first, msg.second);
+      };
+  } else {
+    can_pub_ = create_publisher<can_msgs::msg::Frame>("to_can_bus", 10);
+    send_msg_ = [this](Messages::value_type & msg) {
+        this->send_can<can_msgs::msg::Frame>(msg.first, msg.second);
+      };
+  }
 
   diag_task_ =
     std::make_shared<DiagTask>("sender", [this](auto & status) {this->diagnostics(status);});
@@ -63,23 +74,7 @@ void Sender::send_can()
   auto start = steady_clock::now();
 #endif
 
-  for (auto &[id, message] : messages_) {
-    can_msgs::msg::Frame frame;
-
-    frame.header.stamp = now();
-    frame.header.frame_id = node_frame_id_;
-
-    frame.id = id;
-    frame.dlc = frame.data.size();
-    frame.is_extended = id > kMaxBaseIdentifier;
-
-    message.encode(frame.data);
-
-    can_pub_->publish(frame);
-
-    last_message_sent_ = now();
-    diag_updater_->force_update();
-  }
+  std::for_each(messages_.begin(), messages_.end(), send_msg_);
 
   RCLCPP_DEBUG(
     get_logger(), "Sending of messages in %s took %f s", get_name(),

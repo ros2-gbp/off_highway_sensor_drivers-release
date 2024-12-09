@@ -259,7 +259,7 @@ bool Receiver::is_j1939_source_address_matching(uint8_t source_address)
 
 bool Receiver::filter(const Object & object)
 {
-  return object.object_type == Object::TYPE_NONE;
+  return object.object_type == Object::TYPE_NONE || object.object_type == Object::TYPE_SNA;
 }
 
 void Receiver::manage_and_publish_objects()
