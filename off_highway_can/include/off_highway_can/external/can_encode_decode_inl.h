@@ -19,6 +19,24 @@
 // SOFTWARE.
 //
 
+// Adapted from
+// https://github.com/reinzor/libcan-encode-decode/blob/master/include/can_encode_decode_inl.h
+
+// Modifications:
+// Copyright 2024 Robert Bosch GmbH and its subsidiaries
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 #ifndef CAN_ENCODE_DECODE_INL_H_
 #define CAN_ENCODE_DECODE_INL_H_
 
@@ -51,7 +69,7 @@ inline void clearBits(uint8_t* target_byte, uint8_t* bits_to_clear, const uint8_
   }
 }
 
-inline void storeSignal(uint8_t* frame, uint64_t value, const uint8_t startbit, const uint8_t length,
+inline void storeSignal(uint8_t* frame, uint64_t value, const uint16_t startbit, const uint8_t length,
                         bool is_big_endian, bool is_signed)
 {
   uint8_t start_byte = startbit / 8;
@@ -93,7 +111,7 @@ inline void storeSignal(uint8_t* frame, uint64_t value, const uint8_t startbit, 
   }
 }
 
-inline uint64_t extractSignal(const uint8_t* frame, const uint8_t startbit, const uint8_t length, bool is_big_endian,
+inline uint64_t extractSignal(const uint8_t* frame, const uint16_t startbit, const uint8_t length, bool is_big_endian,
                               bool is_signed)
 {
   uint8_t start_byte = startbit / 8;
@@ -156,13 +174,13 @@ inline void encode(uint8_t* frame, const float value, const uint16_t startbit, c
 
 // Texas instruments IQ notation https://en.wikipedia.org/wiki/Q_(number_format)
 
-inline double extractIQ(const uint8_t* frame, uint8_t start, uint8_t length, uint8_t float_length, bool is_big_endian,
+inline double extractIQ(const uint8_t* frame, uint16_t start, uint8_t length, uint8_t float_length, bool is_big_endian,
                         bool is_signed)
 {
   return (int64_t) extractSignal(frame, start, length, is_big_endian, is_signed) / pow(2, float_length);
 }
 
-inline void storeIQ(uint8_t* frame, double value, uint8_t start, uint8_t length, uint8_t float_length,
+inline void storeIQ(uint8_t* frame, double value, uint16_t start, uint8_t length, uint8_t float_length,
                     bool is_big_endian, bool is_signed)
 {
   storeSignal(frame, value * pow(2, float_length), start, length, is_big_endian, is_signed);
