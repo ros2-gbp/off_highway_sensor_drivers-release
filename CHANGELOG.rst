@@ -2,6 +2,12 @@
 Changelog for package off_highway_uss_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2025-03-24)
+------------------
+* `rosidl_default_generators` is technically a `<buildtool_depend>` (#13)
+  rosidl_default_generators is technically a buildtool_depend
+* Contributors: Tim Clephas
+
 0.7.0 (2024-12-04)
 ------------------
 * Add object type SNA and filter such objects
