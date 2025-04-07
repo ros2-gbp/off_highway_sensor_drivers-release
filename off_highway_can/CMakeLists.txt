@@ -61,13 +61,13 @@ if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # Exclude FOSS
   list(APPEND AMENT_LINT_AUTO_FILE_EXCLUDE
-    test/test_encode_decode.cpp
+    test/external/test_encode_decode.cpp
     include/off_highway_can/external/can_encode_decode_inl.h
   )
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(test_encode_decode test/test_encode_decode.cpp)
+  ament_add_gtest(test_encode_decode test/external/test_encode_decode.cpp)
   # Disable warnings since we won't change FOSS
   target_compile_options(test_encode_decode PRIVATE -Wno-sign-compare -Wno-unused-parameter)
   target_include_directories(test_encode_decode PUBLIC
@@ -75,6 +75,13 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_encode_decode ${PROJECT_NAME})
+
+  ament_add_gtest(test_encode_decode_by_round test/test_encode_decode_by_round.cpp)
+  target_include_directories(test_encode_decode_by_round PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_encode_decode_by_round ${PROJECT_NAME})
 endif()
 
 ament_package()
