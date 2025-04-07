@@ -2,6 +2,9 @@
 Changelog for package off_highway_premium_radar_sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2025-03-24)
+------------------
+
 0.7.0 (2024-12-04)
 ------------------
 * Do not force warnings as errors to fix rolling (#11)
