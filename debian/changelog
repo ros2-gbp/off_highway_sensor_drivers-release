@@ -1,0 +1,72 @@
+ros-humble-off-highway-can (0.9.0-1jammy) jammy; urgency=high
+
+  * Use lround and explicit cast
+  * Fix integer inputs for round test
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 16 Jun 2025 00:00:00 -0000
+
+ros-humble-off-highway-can (0.8.0-1jammy) jammy; urgency=high
+
+  * Move test to emphasize external FOSS
+  * Add tests for encoding by round
+  * Replace truncation of physical value with round outside of FOSS
+    Minimizes the floating point error such that half
+    offset of resolution in tests is not needed
+    anymore.
+  * Contributors: Calin-Vasile Sopterean, Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 24 Mar 2025 00:00:00 -0000
+
+ros-humble-off-highway-can (0.7.0-1jammy) jammy; urgency=high
+
+  * Update docs for CAN FD
+  * Check matching lengths in decoding
+  * Allow start bits in CAN FD range
+  * Make CRC and message counter optional
+  * Enable processing of CAN FD frames
+  * Remove unused definitions
+  * Do not force warnings as errors to fix rolling (#11)
+  * Contributors: Robin Petereit, Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 04 Dec 2024 00:00:00 -0000
+
+ros-humble-off-highway-can (0.6.3-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 09 Jul 2024 00:00:00 -0000
+
+ros-humble-off-highway-can (0.6.2-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Thu, 13 Jun 2024 00:00:00 -0000
+
+ros-humble-off-highway-can (0.6.1-1jammy) jammy; urgency=high
+
+  * Fix missing dependency that was find_packaged (#7)
+    * Fix missing dependency that was find_packaged
+    * Use ament_lint_common
+    ---------
+  * Contributors: Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 04 Jun 2024 00:00:00 -0000
+
+ros-humble-off-highway-can (0.6.0-1jammy) jammy; urgency=high
+
+  * Switch from deprecated signature to const shared_ptr reference while still supporting efficient intra-process communication
+    See https://github.com/ros2/rclcpp/pull/1598.
+  * Contributors: Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 14 May 2024 00:00:00 -0000
+
+ros-humble-off-highway-can (0.5.1-1jammy) jammy; urgency=high
+
+  * Align Clang FP contraction to GCC for passing tests
+  * Add virtual destructor for base class
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 27 Mar 2024 00:00:00 -0000
+
+
