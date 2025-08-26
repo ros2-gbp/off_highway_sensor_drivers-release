@@ -1,5 +1,8 @@
 # off_highway_premium_radar_sample_msgs
 
+> :warning: The Bosch Radar Off-Highway Premium Radar Sample packages are considered legacy and may
+> be removed in a future release.
+
 This package provides the ROS messages for the off_highway_premium_radar_sample package and maps the
 UDP interface of the premium radar to ROS messages.
 
