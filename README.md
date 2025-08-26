@@ -1,85 +1,115 @@
-# off_highway_general_purpose_radar
+# off_highway_sensor_drivers
 
-The off_highway_general_purpose_radar package provides a receiver node to receive and decode CAN
-frames of the Bosch General Purpose Radar Off-Highway (GPR) into ROS messages - it implements an
-`off_highway_can::Receiver`.
+This project provides ROS drivers for Bosch Off-Highway sensor systems.
 
-Further information on the Bosch General Purpose Radar Off-Highway (GPR), it's inputs, outputs and
-how they can be interpreted can be found in the corresponding [Technical Customer Documentation
-(TCD) of the sensor
-system](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/radar-systems-ohw/).
+The off_highway_sensor_drivers package is developed for ROS 2 Humble on Ubuntu 22.04.
 
-## Supported devices
+The [**off_highway_sensor_drivers**](off_highway_sensor_drivers/package.xml) package acts as
+metapackage for all of the following packages.
 
-| **Device name** | **Part Number** | **Description** | **Supported by subpackage** | **Quality declaration** |
-| -| - | - | - | - |
-| General Purpose Radar Off-Highway (GPR) | - F037.000.100 (series) <br> - F037.B00.255-11 (sample) | - Radar sensor with up to 48 target reflections<br> - Target output on automotive CAN is supported | off_highway_general_purpose_radar | 3 |
+## Ethernet Based Drivers
 
-Further information: [Radar systems for off-highway
+- [**off_highway_premium_radar_sample**](off_highway_premium_radar_sample/README.md): Driver library
+  and node for the Bosch Radar Off-Highway Premium Sample
+- [**off_highway_premium_radar_sample_msgs**](off_highway_premium_radar_sample_msgs/README.md): The
+  custom message interface for the off_highway_premium_radar_sample package
+
+For further information, have a look at the linked package readmes.
+
+## CAN Based Drivers
+
+- [**off_highway_can**](off_highway_can/README.md): Library containing receiver and sender
+  classes to decode / encode sensor CAN frames
+- [**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md): Receiver
+  node for the Bosch General Purpose Radar Off-Highway (GPR)
+- [**off_highway_general_purpose_radar_msgs**](off_highway_general_purpose_radar_msgs/README.md):
+  The custom message interface for the Bosch General Purpose Radar Off-Highway (GPR)
+- [**off_highway_radar**](off_highway_radar/README.md): Receiver and sender nodes for the Bosch
+  Radar Off-Highway
+- [**off_highway_radar_msgs**](off_highway_radar_msgs/README.md): The custom message interface for
+  the off_highway_radar package
+- [**off_highway_uss**](off_highway_uss/README.md): Receiver and sender nodes for the Bosch
+  Ultrasonic Sensor System Off-Highway
+- [**off_highway_uss_msgs**](off_highway_uss_msgs/README.md): The custom message interface for the
+  off_highway_uss package
+
+The CAN communication based sensors were tested in a 500 kBd CAN configuration.
+
+The CAN communication based drivers offer the possibility to [log processing cycle
+times](off_highway_can/README.md). This allows you to check if your hardware in combination with
+these drivers is capable of processing your system's specific CAN load.
+
+For further information, have a look at the linked package readmes.
+
+### Architecture
+
+The most relevant packages for an application of the CAN communication based sensors are the
+[**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md),
+[**off_highway_radar**](off_highway_radar/README.md) and
+[**off_highway_uss**](off_highway_uss/README.md) packages, which provide a `receiver` node to
+convert CAN (FD) frames received from the sensor into ROS messages and a `sender` node to provide
+relevant information as CAN (FD) frames, converted from a ROS message interface.
+
+The sensor packages do **not** contain a CAN to ROS driver. Instead, their interface towards the
+sensor side are encoded as
+[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) or
+[`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg)
+ROS messages. Such messages can be handled by e.g., the
+[ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) sender and receiver, which
+convert between such ROS messages and physical CAN (FD) frames through the SocketCAN driver. See the
+following diagram for a system overview:
+
+![Sensor Driver Architecture](doc/media/system_setup.drawio.svg "Sensor Driver Architecture")
+
+## Miscellaneous
+
+- [**off_highway_sensor_drivers_examples**](off_highway_sensor_drivers_examples/README.md): Sample
+  launch files and scripts to assist with further processing of sensor data.
+
+For further information, have a look at the linked package readme.
+
+## Further Information about the Hardware
+
+- [Radar OHW Premium](https://www.bosch-engineering.com/stories/stories-detailpages/hd-radar.html)
+- [Radar systems for off-highway
   applications](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/radar-systems-ohw/)
+- [Ultrasonic system variants and
+  sensors](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/ultrasonic-sensor-systems-ohw/)
 
-Contact: [**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Radar%20Sensors)
+Or contact
+[**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Hardware%20Question).
 
-## Nodes
+## Intended Use
 
-### Receiver
+See [intended use](doc/intended_use.md).
 
-The radar receiver decodes CAN frames into a target list, manages the current list and publishes
-it cyclically.
+## License
 
-All received messages are checked for their cyclic redundancy check (CRC), rolling message counter
-and age (message not older than parameter `allowed_age`). If any of these checks do not succeed the
-received message is not further processed and skipped.
+Please see [LICENSE](LICENSE).
 
-The relevant radar CAN frame IDs to process are specified by the `target_base_id` and `info_id`
-parameters. They should correspond to the first target frame ID and the info frame ID of the radar
-CAN node and need to be adapted for the specific bus setup. If multiple radar sensors need to be
-decoded on the same bus just launch multiple receiver nodes with individual `*_id` parameters.
+## Build
 
-The target list is published as a list of radar targets or as a point cloud and contains up to
-48 targets (sensor limit). Only valid targets in the list are published (measured flag set).
+### Prerequisites
 
-If the receiver node does not receive anything within a configured period (parameter `timeout`), it
-will publish a diagnostic error on `/diagnostics`. Also, the sensor information CAN frame gets
-published and is checked for the diagnostic status of the radar. On error, the node will publish a
-diagnostic error on `/diagnostics`.
+Install:
 
-#### Subscribed Topics
+- Ubuntu jammy 22.04
+- ROS humble
 
-* **received_messages
-  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
-  * Radar CAN frames to decode
+### Install Dependencies
 
-#### Published Topics
+Clone this repository into your workspace and execute in it:
 
-* **targets
-  ([`off_highway_general_purpose_radar_msgs/Targets`](../off_highway_general_purpose_radar_msgs/msg/Targets.msg))**
-  * Update Rate: configurable with `publish_frequency`
-  * Contains current target list of radar as custom message containing the same information as
-    each target's CAN frame. Mapping to the respective CAN frame is done via the `id` field.
-* **targets_pcl
-  ([`sensor_msgs/PointCloud2`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/PointCloud2.html))**
-  * Update Rate: configurable with `publish_frequency`
-  * Contains current target list of radar as point cloud.
-* **info
-  ([`off_highway_radar_msgs/Information`](../off_highway_general_purpose_radar_msgs/msg/Information.msg))**
-  * Update Rate: On each sensor information CAN frame
-  * Contains current sensor information message containing the same information as the respective
-    CAN frame.
-* **/diagnostics
-  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
-  * Update Rate: On each sensor information CAN frame or if receiver timed out periodically with
-    timeout period
-  * Diagnostic status contains statuses from the latest received sensor information and timeout
-    status.
+```bash
+rosdep update && rosdep install --from-paths src --ignore-src -r -y
+```
 
-#### Parameters
+### Compile
 
-See [receiver_params.yaml](config/receiver_params.yaml).
+Execute in your workspace
 
-## Launch files
+```bash
+colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Release'
+```
 
-* **[receiver_launch](launch/receiver_launch.py)**: Starts the receiver with the given parameters.
-  * Arguments:
-    * **params**: Path to ROS YAML parameter file to load for receiver. If not provided, default
-      parameters from this package are loaded.
+for using colcon.
