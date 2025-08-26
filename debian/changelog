@@ -1,0 +1,53 @@
+ros-humble-off-highway-sensor-drivers (0.9.0-1jammy) jammy; urgency=high
+
+  * Add premium radar driver for series sensor
+  * Contributors: Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 16 Jun 2025 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.8.0-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 24 Mar 2025 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.7.0-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 04 Dec 2024 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.6.3-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 09 Jul 2024 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.6.2-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Thu, 13 Jun 2024 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.6.1-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 04 Jun 2024 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.6.0-1jammy) jammy; urgency=high
+
+  * Rename premium radar driver to sample
+    Currently, the delivered Radar Off-Highway Premium and its firmware are just samples.
+    Separate package will be created for series firmware.
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 14 May 2024 00:00:00 -0000
+
+ros-humble-off-highway-sensor-drivers (0.5.1-1jammy) jammy; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 27 Mar 2024 00:00:00 -0000
+
+
