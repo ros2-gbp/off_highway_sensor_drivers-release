@@ -2,7 +2,7 @@
 Changelog for package off_highway_premium_radar_sample_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.9.0 (2025-06-16)
+1.0.0 (2025-07-01)
 ------------------
 * Add premium radar driver for series sensor
 * Contributors: Sarah Huber

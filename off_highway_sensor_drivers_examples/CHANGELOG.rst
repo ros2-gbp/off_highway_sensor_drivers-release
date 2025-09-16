@@ -2,7 +2,7 @@
 Changelog for package off_highway_sensor_drivers_examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.9.0 (2025-06-16)
+1.0.0 (2025-07-01)
 ------------------
 * Move PCL dependencies
 * Add premium radar driver for series sensor
