@@ -1,0 +1,20 @@
+ros-rolling-off-highway-premium-radar-msgs (1.0.0-1bookworm) bookworm; urgency=high
+
+  * Remove measurement cycle synchronization PDU
+    Measurement cycle synchronization will be handled via diagnosis in series sensor.
+  * Remove sensor DTC  information PDU
+  * Remove sensor feedback PDU
+  * Remove sensor mode request PDU
+  * Switch to custom message for sensor mounting position
+    This removes the dependency to tf2.
+  * Remove Sensor Broadcast message
+  * Implement LGP interface changes for series sensor
+    - Add sensor coating information (blindness)
+    - Add additional misalignment indicator
+    - Strip down sensor state information
+  * Add premium radar driver for series sensor
+  * Contributors: Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 30 Jun 2025 21:00:00 -0000
+
+
