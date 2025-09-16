@@ -1,0 +1,87 @@
+ros-rolling-off-highway-premium-radar-sample (1.0.0-1bookworm) bookworm; urgency=high
+
+  * Fix PduId check for get_pdu_type
+  * fix: tf2 uses hpp headers in rolling (and is backported)
+  * Move PCL dependencies
+  * Update README
+  * Add premium radar driver for series sensor
+  * Format
+  * Contributors: Calin-Vasile Sopterean, Gabriela Adriana Lapuste, Sarah Huber, Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 30 Jun 2025 21:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.8.0-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Sun, 23 Mar 2025 22:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.7.0-1bookworm) bookworm; urgency=high
+
+  * Do not force warnings as errors to fix rolling (#11)
+  * Contributors: Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 03 Dec 2024 22:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.6.3-1bookworm) bookworm; urgency=high
+
+  * Add missing dependency on PCL headers (#9)
+    When I try to build this package on jazzy with rosdep, the PCL headers
+    are missing. This package uses find_package(PCL) and includes it in
+    the headers. Therefore I think it would be best to add it to the
+    build_depend and build_export_depend tags of the package.xml
+    files.
+    In the buildfarm this is technically not needed because the PCL headers
+    are a build_export_depend of pcl_conversions, but rosdep ignores
+    this dependency so it misses the PCL headers.
+  * Contributors: Ramon Wijnands
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 08 Jul 2024 21:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.6.2-1bookworm) bookworm; urgency=high
+
+  * Fix azimuth and elevation angle variances of premium radar (#8)
+  * Contributors: Maximilian Hilger
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 12 Jun 2024 21:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.6.1-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 03 Jun 2024 21:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.6.0-1bookworm) bookworm; urgency=high
+
+  * Rename premium radar driver to sample
+    Currently, the delivered Radar Off-Highway Premium and its firmware are just samples.
+    Separate package will be created for series firmware.
+  * Switch from deprecated signature to const shared_ptr reference while still supporting efficient intra-process communication
+    See https://github.com/ros2/rclcpp/pull/1598.
+  * Interpret azimuth and elevation angle of premium radar locations as cone coordinates
+  * Update executable names for premium radar in launch
+  * Convert premium radar from node to component
+  * Remove redundant normal in pcl
+  * Contributors: Robin Petereit, Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 13 May 2024 21:00:00 -0000
+
+ros-rolling-off-highway-premium-radar-sample (0.5.1-1bookworm) bookworm; urgency=high
+
+  * Disable irrelevant warnings for Clang
+    Anonymous structs are used in PCL for type punning:
+    https://github.com/PointCloudLibrary/pcl/issues/2303
+    Subobject braces are not needed:
+    https://bugs.llvm.org/show_bug.cgi?id=21629
+    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=25137
+  * Remove unnecessary self assignment
+  * Clarify operation order
+  * Remove C style cast
+  * Use explicit initialization
+  * Remove unused variables
+  * Add virtual destructor for base class
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 26 Mar 2024 22:00:00 -0000
+
+
