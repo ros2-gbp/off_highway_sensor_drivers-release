@@ -1,0 +1,72 @@
+ros-rolling-off-highway-can (1.0.0-1bookworm) bookworm; urgency=high
+
+  * Use lround and explicit cast
+  * Fix integer inputs for round test
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 30 Jun 2025 21:00:00 -0000
+
+ros-rolling-off-highway-can (0.8.0-1bookworm) bookworm; urgency=high
+
+  * Move test to emphasize external FOSS
+  * Add tests for encoding by round
+  * Replace truncation of physical value with round outside of FOSS
+    Minimizes the floating point error such that half
+    offset of resolution in tests is not needed
+    anymore.
+  * Contributors: Calin-Vasile Sopterean, Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Sun, 23 Mar 2025 22:00:00 -0000
+
+ros-rolling-off-highway-can (0.7.0-1bookworm) bookworm; urgency=high
+
+  * Update docs for CAN FD
+  * Check matching lengths in decoding
+  * Allow start bits in CAN FD range
+  * Make CRC and message counter optional
+  * Enable processing of CAN FD frames
+  * Remove unused definitions
+  * Do not force warnings as errors to fix rolling (#11)
+  * Contributors: Robin Petereit, Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 03 Dec 2024 22:00:00 -0000
+
+ros-rolling-off-highway-can (0.6.3-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 08 Jul 2024 21:00:00 -0000
+
+ros-rolling-off-highway-can (0.6.2-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 12 Jun 2024 21:00:00 -0000
+
+ros-rolling-off-highway-can (0.6.1-1bookworm) bookworm; urgency=high
+
+  * Fix missing dependency that was find_packaged (#7)
+    * Fix missing dependency that was find_packaged
+    * Use ament_lint_common
+    ---------
+  * Contributors: Tim Clephas
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 03 Jun 2024 21:00:00 -0000
+
+ros-rolling-off-highway-can (0.6.0-1bookworm) bookworm; urgency=high
+
+  * Switch from deprecated signature to const shared_ptr reference while still supporting efficient intra-process communication
+    See https://github.com/ros2/rclcpp/pull/1598.
+  * Contributors: Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 13 May 2024 21:00:00 -0000
+
+ros-rolling-off-highway-can (0.5.1-1bookworm) bookworm; urgency=high
+
+  * Align Clang FP contraction to GCC for passing tests
+  * Add virtual destructor for base class
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 26 Mar 2024 22:00:00 -0000
+
+
