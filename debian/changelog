@@ -1,0 +1,53 @@
+ros-jazzy-off-highway-sensor-drivers (1.0.0-1bookworm) bookworm; urgency=high
+
+  * Add premium radar driver for series sensor
+  * Contributors: Sarah Huber
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 30 Jun 2025 21:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.8.0-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Sun, 23 Mar 2025 22:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.7.0-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 03 Dec 2024 22:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.6.3-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 08 Jul 2024 21:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.6.2-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Wed, 12 Jun 2024 21:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.6.1-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 03 Jun 2024 21:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.6.0-1bookworm) bookworm; urgency=high
+
+  * Rename premium radar driver to sample
+    Currently, the delivered Radar Off-Highway Premium and its firmware are just samples.
+    Separate package will be created for series firmware.
+  * Contributors: Robin Petereit
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Mon, 13 May 2024 21:00:00 -0000
+
+ros-jazzy-off-highway-sensor-drivers (0.5.1-1bookworm) bookworm; urgency=high
+
+
+
+ -- Robin Petereit <robin.petereit@de.bosch.com>  Tue, 26 Mar 2024 22:00:00 -0000
+
+
