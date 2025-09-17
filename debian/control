@@ -1,0 +1,12 @@
+Source: ros-jazzy-off-highway-premium-radar-sample
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), libasio-dev, libpcl-dev, ros-jazzy-ament-cmake, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-asio-cmake-module, ros-jazzy-diagnostic-updater, ros-jazzy-io-context, ros-jazzy-off-highway-premium-radar-sample-msgs, ros-jazzy-pcl-conversions, ros-jazzy-rclcpp, ros-jazzy-rclcpp-components, ros-jazzy-sensor-msgs, ros-jazzy-std-msgs, ros-jazzy-tf2, ros-jazzy-tf2-geometry-msgs, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-off-highway-premium-radar-sample
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libasio-dev, libpcl-common1.14, libpcl-dev, ros-jazzy-diagnostic-updater, ros-jazzy-io-context, ros-jazzy-off-highway-premium-radar-sample-msgs, ros-jazzy-rclcpp, ros-jazzy-rclcpp-components, ros-jazzy-sensor-msgs, ros-jazzy-std-msgs, ros-jazzy-tf2, ros-jazzy-tf2-geometry-msgs, ros-jazzy-ros-workspace
+Description: The off_highway_premium_radar_sample package
