@@ -1,0 +1,12 @@
+Source: ros-rolling-off-highway-can
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-cmake-gtest <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-can-msgs, ros-rolling-diagnostic-updater, ros-rolling-rclcpp, ros-rolling-ros2-socketcan-msgs, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-off-highway-can
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-can-msgs, ros-rolling-diagnostic-updater, ros-rolling-rclcpp, ros-rolling-ros2-socketcan-msgs, ros-rolling-ros-workspace
+Description: The off_highway_can package
