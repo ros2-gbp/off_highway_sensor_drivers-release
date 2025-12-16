@@ -1,0 +1,12 @@
+Source: ros-rolling-off-highway-radar
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), libpcl-dev, ros-rolling-ament-cmake, ros-rolling-ament-cmake-ros <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-can-msgs, ros-rolling-off-highway-can, ros-rolling-off-highway-radar-msgs, ros-rolling-pcl-conversions, ros-rolling-pcl-ros <!nocheck>, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-off-highway-radar
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libpcl-common1.14, libpcl-dev, ros-rolling-can-msgs, ros-rolling-off-highway-can, ros-rolling-off-highway-radar-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-ros-workspace
+Description: The off_highway_radar package
