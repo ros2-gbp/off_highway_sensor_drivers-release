@@ -33,7 +33,12 @@ add_library(${PROJECT_NAME} SHARED
   src/sender.cpp
 )
 
-ament_target_dependencies(${PROJECT_NAME} rclcpp can_msgs diagnostic_updater ros2_socketcan_msgs)
+target_link_libraries(${PROJECT_NAME} PUBLIC
+  ${can_msgs_TARGETS}
+  ${ros2_socketcan_msgs_TARGETS}
+  diagnostic_updater::diagnostic_updater
+  rclcpp::rclcpp
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -82,6 +87,13 @@ if(BUILD_TESTING)
     $<INSTALL_INTERFACE:include>
   )
   target_link_libraries(test_encode_decode_by_round ${PROJECT_NAME})
+
+  ament_add_gtest(test_receiver test/test_receiver.cpp)
+  target_include_directories(test_receiver PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+  )
+  target_link_libraries(test_receiver ${PROJECT_NAME})
 endif()
 
 ament_package()
