@@ -1,0 +1,12 @@
+Source: ros-rolling-off-highway-sensor-drivers-examples
+Section: misc
+Priority: optional
+Maintainer: Sarah Huber <sarah.huber@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-geometry-msgs, ros-rolling-nav-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-off-highway-sensor-drivers-examples
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-geometry-msgs, ros-rolling-nav-msgs, ros-rolling-off-highway-premium-radar, ros-rolling-off-highway-radar, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-ros-workspace
+Description: The off_highway_sensor_drivers_examples package
