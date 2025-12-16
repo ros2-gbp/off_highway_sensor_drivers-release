@@ -2,6 +2,12 @@
 Changelog for package off_highway_premium_radar_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.1.0 (2025-11-12)
+------------------
+* Add unit tests for Location Atrributes PDU
+* Add unit test for Location Data PDU
+* Contributors: Calin-Vasile Sopterean
+
 1.0.0 (2025-07-01)
 ------------------
 * Remove measurement cycle synchronization PDU
