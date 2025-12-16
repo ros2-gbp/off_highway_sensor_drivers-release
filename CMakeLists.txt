@@ -27,17 +27,6 @@ find_package(off_highway_premium_radar_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 
-set(dependencies
-  ASIO
-  diagnostic_updater
-  io_context
-  off_highway_premium_radar_msgs
-  rclcpp
-  rclcpp_components
-  sensor_msgs
-  std_msgs
-)
-
 # Library
 add_library(${PROJECT_NAME} SHARED
   src/driver.cpp
@@ -48,11 +37,22 @@ add_library(${PROJECT_NAME} SHARED
   src/converters/default_converter.cpp
 )
 
-ament_target_dependencies(${PROJECT_NAME} SYSTEM ${dependencies})
+target_link_libraries(off_highway_premium_radar PUBLIC
+      ${off_highway_premium_radar_msgs_TARGETS}
+      ${sensor_msgs_TARGETS}
+      ${std_msgs_TARGETS}
+      diagnostic_updater::diagnostic_updater
+      ${io_context_LIBRARIES}
+      rclcpp::rclcpp
+      rclcpp_components::component
+      rclcpp_components::component_manager
+      sensor_msgs::sensor_msgs_library
+)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
+  ${io_context_INCLUDE_DIRS}
 )
 
 install(
@@ -70,7 +70,16 @@ install(
 )
 
 ament_export_targets(export_${PROJECT_NAME} HAS_LIBRARY_TARGET)
-ament_export_dependencies(${dependencies})
+ament_export_dependencies(
+  ASIO
+  diagnostic_updater
+  io_context
+  off_highway_premium_radar_msgs
+  rclcpp
+  rclcpp_components
+  sensor_msgs
+  std_msgs
+)
 
 # Executable
 rclcpp_components_register_node(${PROJECT_NAME}
@@ -93,9 +102,19 @@ if(BUILD_TESTING)
   ament_add_ros_isolated_gtest(test_driver_sensor_state_info test/test_driver_sensor_state_info.cpp)
   target_link_libraries(test_driver_sensor_state_info ${PROJECT_NAME})
 
-  ament_add_ros_isolated_gtest(test_driver_location_attributes test/test_driver_location_attributes.cpp)
+  ament_add_ros_isolated_gtest(test_driver_location_data test/test_driver_location_data.cpp)
+  target_link_libraries(test_driver_location_data ${PROJECT_NAME})
+
+  ament_add_ros_isolated_gtest(
+    test_driver_location_attributes test/test_driver_location_attributes.cpp)
   target_link_libraries(test_driver_location_attributes ${PROJECT_NAME})
 
+  ament_add_ros_isolated_gtest(test_driver_ego_vehicle_input test/test_driver_ego_vehicle_input.cpp)
+  target_link_libraries(test_driver_ego_vehicle_input ${PROJECT_NAME})
+
+  ament_add_ros_isolated_gtest(
+    test_driver_measurement_program test/test_driver_measurement_program.cpp)
+  target_link_libraries(test_driver_measurement_program ${PROJECT_NAME})
 endif()
 
 ament_package(CONFIG_EXTRAS
