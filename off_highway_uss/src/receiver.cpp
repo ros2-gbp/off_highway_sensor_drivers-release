@@ -271,7 +271,7 @@ void Receiver::manage_and_publish_objects()
 
 void Receiver::publish_objects()
 {
-  if (pub_objects_->get_subscription_count() == 0) {
+  if (pub_objects_->get_subscription_count() == 0 || is_timeout_) {
     return;
   }
 
@@ -290,7 +290,7 @@ void Receiver::publish_objects()
 
 void Receiver::publish_pcl()
 {
-  if (pub_objects_pcl_->get_subscription_count() == 0) {
+  if (pub_objects_pcl_->get_subscription_count() == 0 || is_timeout_) {
     return;
   }
 
@@ -344,6 +344,10 @@ void Receiver::manage_and_publish_direct_echos()
 
 void Receiver::publish_direct_echos()
 {
+  if (is_timeout_) {
+    return;
+  }
+
   DirectEchos msg;
   msg.header.stamp = now();
   msg.header.frame_id = node_frame_id_;
