@@ -254,6 +254,11 @@ struct LocData_Packet_i_j
  */
 struct LocationDataPdu
 {
+  /**
+   * \brief Serialize members into byte vector with correct byte order
+   */
+  std::vector<uint8_t> serialize();
+
   static constexpr uint32_t kPacketIdFirst = 0x13370001UL;
   static constexpr uint32_t kPacketIdLast = 0x13370040UL;
   static constexpr uint32_t kPduPayloadLength{1190u};
@@ -849,6 +854,9 @@ struct EgoVehicleInput
   static constexpr uint32_t kPduPayloadLength{16u};
   static constexpr uint32_t kPduSize{kPduPayloadLength + kPduHeaderLength};
 
+  EgoVehicleInput() = default;
+  explicit EgoVehicleInput(const std::array<uint8_t, kPduSize> & buffer);
+
   /**
    * \brief Serialize members into byte vector with correct byte order
    */
@@ -920,6 +928,9 @@ struct MeasurementProgram
   static constexpr uint32_t kPduId{0x13370053};
   static constexpr uint32_t kPduPayloadLength{12u};
   static constexpr uint32_t kPduSize{kPduPayloadLength + kPduHeaderLength};
+
+  MeasurementProgram() = default;
+  explicit MeasurementProgram(const std::array<uint8_t, kPduSize> & buffer);
 
   /**
    * \brief PDU ID
