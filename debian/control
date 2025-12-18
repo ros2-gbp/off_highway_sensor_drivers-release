@@ -1,0 +1,12 @@
+Source: ros-jazzy-off-highway-can
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-jazzy-ament-cmake, ros-jazzy-ament-cmake-gtest <!nocheck>, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-can-msgs, ros-jazzy-diagnostic-updater, ros-jazzy-rclcpp, ros-jazzy-ros2-socketcan-msgs, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-off-highway-can
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jazzy-can-msgs, ros-jazzy-diagnostic-updater, ros-jazzy-rclcpp, ros-jazzy-ros2-socketcan-msgs, ros-jazzy-ros-workspace
+Description: The off_highway_can package
