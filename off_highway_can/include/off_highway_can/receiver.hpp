@@ -141,6 +141,8 @@ protected:
   const bool use_fd_{false};
   /// Use J1939 protocol, defaults to false if J1939 protocol handling is not implemented for sensor
   bool use_j1939_{false};
+  /// Store the timeout status
+  bool is_timeout_{false};
 
 private:
   /**
@@ -174,7 +176,6 @@ private:
   /// CAN message storage, maps CAN id to message data including signals and their en-/decoding
   /// information
   Messages messages_;
-
 
   double timeout_;
   double watchdog_frequency_;
