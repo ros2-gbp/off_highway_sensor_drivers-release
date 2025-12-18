@@ -2,8 +2,8 @@
 Changelog for package off_highway_can
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Fix formatting for linter
 * off_highway_can: split license element into two
   Having two license strings into one element does give issues when generating
@@ -26,7 +26,7 @@ Changelog for package off_highway_can
   This syntax should work as of ROS 2 Foxy already
 * Contributors: Calin-Vasile Sopterean, Ferry Schoenmakers, Jan Vermaete, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Use lround and explicit cast
 * Fix integer inputs for round test

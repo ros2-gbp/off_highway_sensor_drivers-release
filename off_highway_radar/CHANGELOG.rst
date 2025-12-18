@@ -2,8 +2,8 @@
 Changelog for package off_highway_radar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Update dependency declarations for target_link_libraries
 * Fix issue 20, don't publish sensor data when there is a sensor timeout
 * ament_target_dependencies is deprecated for Kilted and Rolling
@@ -11,7 +11,7 @@ Changelog for package off_highway_radar
 * Add pcl_point_xxx.hpp deprecation warning
 * Contributors: Calin-Vasile Sopterean, Ferry Schoenmakers, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Move PCL dependencies
 * Update README

@@ -38,8 +38,7 @@ public:
   /**
    * \brief Destructor
    */
-  virtual
-  ~Converter() = default;
+  virtual ~Converter() = default;
 
   /**
    * \brief Configure converter with parent node and sender interface

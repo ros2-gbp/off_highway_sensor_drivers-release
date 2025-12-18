@@ -2,8 +2,8 @@
 Changelog for package off_highway_premium_radar_sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Update dependency declarations for target_link_libraries
 * Remove ament deprecation warning from remaining packages
 * ament_target_dependencies is deprecated for Kilted and Rolling
@@ -12,14 +12,13 @@ Changelog for package off_highway_premium_radar_sample
 * Add unit test for Sensor State Information PDU
 * Contributors: Calin-Vasile Sopterean, Sarah Huber, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Fix PduId check for get_pdu_type
 * fix: tf2 uses hpp headers in rolling (and is backported)
 * Move PCL dependencies
 * Update README
 * Add premium radar driver for series sensor
-* Format
 * Contributors: Calin-Vasile Sopterean, Gabriela Adriana Lapuste, Sarah Huber, Tim Clephas
 
 0.8.0 (2025-03-24)

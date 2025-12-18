@@ -32,8 +32,7 @@ public:
   /**
    * \brief Destructor
    */
-  virtual
-  ~Sender() = default;
+  virtual ~Sender() = default;
 
   /**
    * \brief Send ego vehicle data
