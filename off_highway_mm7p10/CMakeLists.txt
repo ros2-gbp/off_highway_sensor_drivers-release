@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(off_highway_general_purpose_radar)
+project(off_highway_mm7p10)
 
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -18,11 +18,10 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(tf2 REQUIRED)
 find_package(can_msgs REQUIRED)
 find_package(off_highway_can REQUIRED)
-find_package(off_highway_general_purpose_radar_msgs REQUIRED)
-find_package(pcl_conversions REQUIRED)
-find_package(PCL REQUIRED COMPONENTS common)
+find_package(off_highway_mm7p10_msgs REQUIRED)
 
 # Library to be used in unit tests
 add_library(${PROJECT_NAME} SHARED
@@ -34,9 +33,9 @@ target_include_directories(${PROJECT_NAME} PUBLIC
   $<INSTALL_INTERFACE:include>
 )
 
-target_link_libraries(off_highway_general_purpose_radar PUBLIC
+target_link_libraries(${PROJECT_NAME} PUBLIC
       ${can_msgs_TARGETS}
-      ${off_highway_general_purpose_radar_msgs_TARGETS}
+      ${off_highway_mm7p10_msgs_TARGETS}
       ${sensor_msgs_TARGETS}
       off_highway_can::off_highway_can
       rclcpp::rclcpp
@@ -44,15 +43,6 @@ target_link_libraries(off_highway_general_purpose_radar PUBLIC
       rclcpp_components::component_manager
       sensor_msgs::sensor_msgs_library
 )
-
-# Link pcl_conversions - use modern target if available, otherwise fallback to variables
-if(TARGET pcl_conversions::pcl_conversions)
-  target_link_libraries(${PROJECT_NAME} PUBLIC pcl_conversions::pcl_conversions)
-else()
-  # Fallback for ROS distributions where target doesn't exist (e.g., Jazzy)
-  target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${pcl_conversions_INCLUDE_DIRS})
-  target_link_libraries(${PROJECT_NAME} PUBLIC ${pcl_conversions_LIBRARIES})
-endif()
 
 install(
   DIRECTORY include/
@@ -72,16 +62,15 @@ ament_export_dependencies(
   rclcpp
   rclcpp_components
   sensor_msgs
+  tf2
   can_msgs
   off_highway_can
-  off_highway_general_purpose_radar_msgs
-  pcl_conversions
-  PCL
+  off_highway_mm7p10_msgs
 )
 
 # Receiver
 rclcpp_components_register_node(${PROJECT_NAME}
-  PLUGIN "off_highway_general_purpose_radar::Receiver"
+  PLUGIN "off_highway_mm7p10::Receiver"
   EXECUTABLE receiver
 )
 
@@ -98,32 +87,15 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 
   find_package(ament_cmake_ros REQUIRED)
-  find_package(pcl_ros REQUIRED)
+  find_package(tf2_geometry_msgs REQUIRED)
 
-  ament_add_ros_isolated_gtest(test_radar_receiver_information test/test_receiver_information.cpp)
-  target_include_directories(test_radar_receiver_information PUBLIC
+  ament_add_ros_isolated_gtest(test_imu_receiver test/test_imu_receiver.cpp)
+  target_include_directories(test_imu_receiver PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   )
-  target_link_libraries(test_radar_receiver_information ${PROJECT_NAME})
+  target_link_libraries(test_imu_receiver ${PROJECT_NAME} ${tf2_geometry_msgs_TARGETS})
 
-  ament_add_ros_isolated_gtest(test_receiver_targets test/test_receiver_targets.cpp)
-  target_include_directories(test_receiver_targets PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-  )
-  target_link_libraries(test_receiver_targets ${PROJECT_NAME})
-
-  ament_add_ros_isolated_gtest(test_pcl_point_target test/test_pcl_point_target.cpp)
-  target_include_directories(test_pcl_point_target PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<INSTALL_INTERFACE:include>
-  )
-  target_link_libraries(test_pcl_point_target ${PROJECT_NAME} pcl_ros::pcl_ros_tf)
 endif()
-
-ament_export_include_directories(
-  include
-)
 
 ament_package()
