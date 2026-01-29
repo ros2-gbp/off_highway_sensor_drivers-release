@@ -1,0 +1,12 @@
+Source: ros-rolling-off-highway-premium-radar
+Section: misc
+Priority: optional
+Maintainer: Robin Petereit <robin.petereit@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), libasio-dev, ros-rolling-ament-cmake, ros-rolling-ament-cmake-ros <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-asio-cmake-module, ros-rolling-diagnostic-updater, ros-rolling-io-context, ros-rolling-off-highway-premium-radar-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-std-msgs, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-off-highway-premium-radar
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libasio-dev, ros-rolling-diagnostic-updater, ros-rolling-io-context, ros-rolling-off-highway-premium-radar-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-std-msgs, ros-rolling-ros-workspace
+Description: The off_highway_premium_radar package
