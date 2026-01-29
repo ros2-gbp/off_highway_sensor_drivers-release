@@ -2,17 +2,17 @@
 Changelog for package off_highway_general_purpose_radar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.11.0 (2026-01-26)
--------------------
+1.2.0 (2026-01-26)
+------------------
 * Revert "Depend on ros_environment where needed (Jazzy version)" (#31)
   Revert "Depend on ros_environment where needed (Jazzy version) (#28)"
   This reverts commit 843890591d6db93ea883a83c0cecac298c5dba7f.
 * Fix pcl_conversions linking error in ROS buildfarm (#30)
-* Depend on ros_environment where needed (Humble version) (#27)
+* Depend on ros_environment where needed (#24)
 * Contributors: Marco A. Gutierrez, Michal Sojka
 
-0.10.0 (2025-11-12)
--------------------
+1.1.0 (2025-11-12)
+------------------
 * Update dependency declarations for target_link_libraries
 * Fix issue 20, don't publish sensor data when there is a sensor timeout
 * Remove ament deprecation warning from remaining packages
@@ -21,7 +21,7 @@ Changelog for package off_highway_general_purpose_radar
 * Add pcl_point_xxx.hpp deprecation warning
 * Contributors: Calin-Vasile Sopterean, Ferry Schoenmakers, Tim Clephas
 
-0.9.0 (2025-06-16)
+1.0.0 (2025-07-01)
 ------------------
 * Move PCL dependencies
 * Update README
