@@ -1,0 +1,12 @@
+Source: ros-rolling-off-highway-mm7p10
+Section: misc
+Priority: optional
+Maintainer: Gabriela-Adriana Lapuste <gabriela-adriana.lapuste@ro.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-rolling-ament-cmake, ros-rolling-ament-cmake-ros <!nocheck>, ros-rolling-ament-lint-auto <!nocheck>, ros-rolling-ament-lint-common <!nocheck>, ros-rolling-can-msgs, ros-rolling-off-highway-can, ros-rolling-off-highway-mm7p10-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-tf2, ros-rolling-tf2-geometry-msgs <!nocheck>, ros-rolling-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-rolling-off-highway-mm7p10
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-rolling-can-msgs, ros-rolling-off-highway-can, ros-rolling-off-highway-mm7p10-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-sensor-msgs, ros-rolling-tf2, ros-rolling-ros-workspace
+Description: The off_highway_mm7p10 package
