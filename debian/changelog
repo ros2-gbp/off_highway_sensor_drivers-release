@@ -1,0 +1,8 @@
+ros-rolling-off-highway-mm7p10-msgs (1.2.0-1bookworm) bookworm; urgency=high
+
+  * Add ROS2 Bosch MM7P10 inertial measurement unit sensor driver
+  * Contributors: Gabriela Adriana Lapuste
+
+ -- Gabriela-Adriana Lapuste <gabriela-adriana.lapuste@ro.bosch.com>  Sun, 25 Jan 2026 22:00:00 -0000
+
+
