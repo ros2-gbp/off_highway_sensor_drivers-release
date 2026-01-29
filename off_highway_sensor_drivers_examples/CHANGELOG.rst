@@ -2,6 +2,9 @@
 Changelog for package off_highway_sensor_drivers_examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.2.0 (2026-01-26)
+------------------
+
 1.1.0 (2025-11-12)
 ------------------
 * Remove ament deprecation warning from remaining packages
