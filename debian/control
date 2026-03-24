@@ -1,0 +1,12 @@
+Source: ros-humble-off-highway-uss
+Section: misc
+Priority: optional
+Maintainer: Sarah Huber <sarah.huber@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-humble-ament-cmake, ros-humble-ament-cmake-ros <!nocheck>, ros-humble-ament-lint-auto <!nocheck>, ros-humble-ament-lint-common <!nocheck>, ros-humble-can-msgs, ros-humble-off-highway-can, ros-humble-off-highway-uss-msgs, ros-humble-rclcpp, ros-humble-rclcpp-components, ros-humble-sensor-msgs, ros-humble-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-humble-off-highway-uss
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-humble-can-msgs, ros-humble-off-highway-can, ros-humble-off-highway-uss-msgs, ros-humble-rclcpp, ros-humble-rclcpp-components, ros-humble-sensor-msgs, ros-humble-ros-workspace
+Description: The off_highway_uss package
