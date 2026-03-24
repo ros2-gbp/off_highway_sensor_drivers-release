@@ -1,0 +1,12 @@
+Source: ros-jazzy-off-highway-sensor-drivers-examples
+Section: misc
+Priority: optional
+Maintainer: Sarah Huber <sarah.huber@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-jazzy-ament-cmake, ros-jazzy-ament-lint-auto <!nocheck>, ros-jazzy-ament-lint-common <!nocheck>, ros-jazzy-geometry-msgs, ros-jazzy-nav-msgs, ros-jazzy-rclcpp, ros-jazzy-rclcpp-components, ros-jazzy-ros-workspace
+Homepage: 
+Standards-Version: 3.9.2
+
+Package: ros-jazzy-off-highway-sensor-drivers-examples
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-jazzy-geometry-msgs, ros-jazzy-nav-msgs, ros-jazzy-off-highway-premium-radar, ros-jazzy-off-highway-radar, ros-jazzy-rclcpp, ros-jazzy-rclcpp-components, ros-jazzy-ros-workspace
+Description: The off_highway_sensor_drivers_examples package
