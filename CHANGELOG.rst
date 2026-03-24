@@ -2,6 +2,11 @@
 Changelog for package off_highway_premium_radar_sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.12.0 (2026-03-10)
+-------------------
+* Update maintainers
+* Contributors: Robin Petereit
+
 0.11.0 (2026-01-26)
 -------------------
 * Revert "Depend on ros_environment where needed (Jazzy version)" (#31)
