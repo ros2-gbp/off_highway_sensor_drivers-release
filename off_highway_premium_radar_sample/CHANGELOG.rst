@@ -2,22 +2,22 @@
 Changelog for package off_highway_premium_radar_sample
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.0 (2026-03-10)
-------------------
+0.12.0 (2026-03-10)
+-------------------
 * Update maintainers
 * Contributors: Robin Petereit
 
-1.2.0 (2026-01-26)
-------------------
+0.11.0 (2026-01-26)
+-------------------
 * Revert "Depend on ros_environment where needed (Jazzy version)" (#31)
   Revert "Depend on ros_environment where needed (Jazzy version) (#28)"
   This reverts commit 843890591d6db93ea883a83c0cecac298c5dba7f.
 * Fix pcl_conversions linking error in ROS buildfarm (#30)
-* Depend on ros_environment where needed (#24)
+* Depend on ros_environment where needed (Humble version) (#27)
 * Contributors: Marco A. Gutierrez, Michal Sojka
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Update dependency declarations for target_link_libraries
 * Remove ament deprecation warning from remaining packages
 * ament_target_dependencies is deprecated for Kilted and Rolling
@@ -26,14 +26,13 @@ Changelog for package off_highway_premium_radar_sample
 * Add unit test for Sensor State Information PDU
 * Contributors: Calin-Vasile Sopterean, Sarah Huber, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Fix PduId check for get_pdu_type
 * fix: tf2 uses hpp headers in rolling (and is backported)
 * Move PCL dependencies
 * Update README
 * Add premium radar driver for series sensor
-* Format
 * Contributors: Calin-Vasile Sopterean, Gabriela Adriana Lapuste, Sarah Huber, Tim Clephas
 
 0.8.0 (2025-03-24)

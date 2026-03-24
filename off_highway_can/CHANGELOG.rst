@@ -2,20 +2,20 @@
 Changelog for package off_highway_can
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.3.0 (2026-03-10)
-------------------
+0.12.0 (2026-03-10)
+-------------------
 * Update maintainers
 * Contributors: Robin Petereit
 
-1.2.0 (2026-01-26)
-------------------
+0.11.0 (2026-01-26)
+-------------------
 * Adapt unit tests to reflect the CPU high load fix
 * Add force diagnostic update on timeout state transition
-* Fix very high CPU usage since it publishes diagnostics on EACH CAN message (#26)
+* Fix very high CPU usage since it publishes diagnostics on EACH CAN me… (#29)
 * Contributors: Ferry Schoenmakers, Gabriela Adriana Lapuste
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Fix formatting for linter
 * off_highway_can: split license element into two
   Having two license strings into one element does give issues when generating
@@ -38,7 +38,7 @@ Changelog for package off_highway_can
   This syntax should work as of ROS 2 Foxy already
 * Contributors: Calin-Vasile Sopterean, Ferry Schoenmakers, Jan Vermaete, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Use lround and explicit cast
 * Fix integer inputs for round test
