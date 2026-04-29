@@ -1,0 +1,15 @@
+ros-lyrical-off-highway-mm7p10-msgs (1.3.0-3resolute) resolute; urgency=high
+
+  * Update maintainers
+  * Contributors: Robin Petereit
+
+ -- Darius Man <darius.man@ro.bosch.com>  Tue, 10 Mar 2026 00:00:00 -0000
+
+ros-lyrical-off-highway-mm7p10-msgs (1.2.0-3resolute) resolute; urgency=high
+
+  * Add ROS2 Bosch MM7P10 inertial measurement unit sensor driver
+  * Contributors: Gabriela Adriana Lapuste
+
+ -- Darius Man <darius.man@ro.bosch.com>  Mon, 26 Jan 2026 00:00:00 -0000
+
+
