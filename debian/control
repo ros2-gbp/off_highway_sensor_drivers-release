@@ -1,0 +1,12 @@
+Source: ros-lyrical-off-highway-mm7p10
+Section: misc
+Priority: optional
+Maintainer: Darius Man <darius.man@ro.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lyrical-ament-cmake, ros-lyrical-ament-cmake-ros <!nocheck>, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-can-msgs, ros-lyrical-off-highway-can, ros-lyrical-off-highway-mm7p10-msgs, ros-lyrical-rclcpp, ros-lyrical-rclcpp-components, ros-lyrical-sensor-msgs, ros-lyrical-tf2, ros-lyrical-tf2-geometry-msgs <!nocheck>, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/off_highway_mm7p10/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-off-highway-mm7p10
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-can-msgs, ros-lyrical-off-highway-can, ros-lyrical-off-highway-mm7p10-msgs, ros-lyrical-rclcpp, ros-lyrical-rclcpp-components, ros-lyrical-sensor-msgs, ros-lyrical-tf2, ros-lyrical-ros-workspace
+Description: The off_highway_mm7p10 package
