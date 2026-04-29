@@ -2,20 +2,20 @@
 Changelog for package off_highway_premium_radar_sample_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.12.0 (2026-03-10)
--------------------
+1.3.0 (2026-03-10)
+------------------
 * Update maintainers
 * Contributors: Robin Petereit
 
-0.11.0 (2026-01-26)
--------------------
+1.2.0 (2026-01-26)
+------------------
 
-0.10.0 (2025-11-12)
--------------------
+1.1.0 (2025-11-12)
+------------------
 * Add unit test for Location Data PDU
 * Contributors: Calin-Vasile Sopterean
 
-0.9.0 (2025-06-16)
+1.0.0 (2025-07-01)
 ------------------
 * Add premium radar driver for series sensor
 * Contributors: Sarah Huber

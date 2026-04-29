@@ -2,18 +2,18 @@
 Changelog for package off_highway_sensor_drivers_examples
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.12.0 (2026-03-10)
--------------------
+1.3.0 (2026-03-10)
+------------------
 
-0.11.0 (2026-01-26)
--------------------
+1.2.0 (2026-01-26)
+------------------
 
-0.10.0 (2025-11-12)
--------------------
+1.1.0 (2025-11-12)
+------------------
 * Remove ament deprecation warning from remaining packages
 * Contributors: Calin-Vasile Sopterean
 
-0.9.0 (2025-06-16)
+1.0.0 (2025-07-01)
 ------------------
 * Move PCL dependencies
 * Add premium radar driver for series sensor
