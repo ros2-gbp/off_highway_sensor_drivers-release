@@ -1,0 +1,15 @@
+ros-rolling-off-highway-mm7p10 (1.3.0-2trixie) trixie; urgency=high
+
+  * Update maintainers
+  * Contributors: Robin Petereit
+
+ -- Darius Man <darius.man@ro.bosch.com>  Tue, 10 Mar 2026 05:00:00 -0000
+
+ros-rolling-off-highway-mm7p10 (1.2.0-2trixie) trixie; urgency=high
+
+  * Add ROS2 Bosch MM7P10 inertial measurement unit sensor driver
+  * Contributors: Gabriela Adriana Lapuste
+
+ -- Darius Man <darius.man@ro.bosch.com>  Mon, 26 Jan 2026 06:00:00 -0000
+
+
