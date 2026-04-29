@@ -1,0 +1,41 @@
+ros-lyrical-off-highway-premium-radar-msgs (1.3.0-3trixie) trixie; urgency=high
+
+  * Update maintainers
+  * Contributors: Robin Petereit
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Tue, 10 Mar 2026 00:00:00 -0000
+
+ros-lyrical-off-highway-premium-radar-msgs (1.2.0-3trixie) trixie; urgency=high
+
+
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Mon, 26 Jan 2026 00:00:00 -0000
+
+ros-lyrical-off-highway-premium-radar-msgs (1.1.0-3trixie) trixie; urgency=high
+
+  * Add unit tests for Location Atrributes PDU
+  * Add unit test for Location Data PDU
+  * Contributors: Calin-Vasile Sopterean
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Wed, 12 Nov 2025 00:00:00 -0000
+
+ros-lyrical-off-highway-premium-radar-msgs (1.0.0-3trixie) trixie; urgency=high
+
+  * Remove measurement cycle synchronization PDU
+    Measurement cycle synchronization will be handled via diagnosis in series sensor.
+  * Remove sensor DTC  information PDU
+  * Remove sensor feedback PDU
+  * Remove sensor mode request PDU
+  * Switch to custom message for sensor mounting position
+    This removes the dependency to tf2.
+  * Remove Sensor Broadcast message
+  * Implement LGP interface changes for series sensor
+    - Add sensor coating information (blindness)
+    - Add additional misalignment indicator
+    - Strip down sensor state information
+  * Add premium radar driver for series sensor
+  * Contributors: Sarah Huber
+
+ -- Sarah Huber <sarah.huber@de.bosch.com>  Tue, 01 Jul 2025 00:00:00 -0000
+
+
