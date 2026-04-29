@@ -1,0 +1,12 @@
+Source: ros-lyrical-off-highway-can
+Section: misc
+Priority: optional
+Maintainer: Sarah Huber <sarah.huber@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lyrical-ament-cmake, ros-lyrical-ament-cmake-gtest <!nocheck>, ros-lyrical-ament-lint-auto <!nocheck>, ros-lyrical-ament-lint-common <!nocheck>, ros-lyrical-can-msgs, ros-lyrical-diagnostic-updater, ros-lyrical-rclcpp, ros-lyrical-ros2-socketcan-msgs, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/off_highway_can/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-off-highway-can
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-can-msgs, ros-lyrical-diagnostic-updater, ros-lyrical-rclcpp, ros-lyrical-ros2-socketcan-msgs, ros-lyrical-ros-workspace
+Description: The off_highway_can package
