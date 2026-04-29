@@ -1,0 +1,12 @@
+Source: ros-lyrical-off-highway-sensor-drivers
+Section: misc
+Priority: optional
+Maintainer: Sarah Huber <sarah.huber@de.bosch.com>
+Build-Depends: debhelper (>= 9.0.0), ros-lyrical-ament-cmake, ros-lyrical-ros-workspace
+Homepage: https://index.ros.org/p/off_highway_sensor_drivers/#lyrical
+Standards-Version: 3.9.2
+
+Package: ros-lyrical-off-highway-sensor-drivers
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, ros-lyrical-off-highway-can, ros-lyrical-off-highway-general-purpose-radar, ros-lyrical-off-highway-general-purpose-radar-msgs, ros-lyrical-off-highway-premium-radar, ros-lyrical-off-highway-premium-radar-msgs, ros-lyrical-off-highway-premium-radar-sample, ros-lyrical-off-highway-premium-radar-sample-msgs, ros-lyrical-off-highway-radar, ros-lyrical-off-highway-radar-msgs, ros-lyrical-off-highway-uss, ros-lyrical-off-highway-uss-msgs, ros-lyrical-ros-workspace
+Description: The off_highway_sensor_drivers package
