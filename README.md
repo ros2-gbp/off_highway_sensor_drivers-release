@@ -1,113 +1,84 @@
-# off_highway_sensor_drivers
+# off_highway_mm7p10
 
-This project provides ROS drivers for Bosch Off-Highway sensor systems.
+The off_highway_mm7p10 package provides a receiver node to receive and decode CAN frames from the Bosch
+MM7.10 Inertial Measurement Unit (IMU) into ROS messages - it implements an `off_highway_can::Receiver`.
 
-The [**off_highway_sensor_drivers**](off_highway_sensor_drivers/package.xml) package acts as
-metapackage for all of the following packages.
+Further information on the Bosch MM7.10 IMU, its inputs, outputs and how they can be
+interpreted can be found on the [Bosch Rexroth Homepage](https://www.boschrexroth.com).
 
-## Ethernet Based Drivers
+## Supported devices
 
-- [**off_highway_premium_radar**](off_highway_premium_radar/README.md): Driver library
-  and node for the Bosch Radar Off-Highway Premium
-- [**off_highway_premium_radar_msgs**](off_highway_premium_radar_msgs/README.md): The
-  custom message interface for the off_highway_premium_radar package
-- [**off_highway_premium_radar_sample**](off_highway_premium_radar_sample/README.md): Driver library
-  and node for the Bosch Radar Off-Highway Premium Sample
-- [**off_highway_premium_radar_sample_msgs**](off_highway_premium_radar_sample_msgs/README.md): The
-  custom message interface for the off_highway_premium_radar_sample package
+| **Device name** | **Part Number** | **Description** |
+| -| - | - |
+| MM7.10 IMU | R 917 013 362 | - 6-axis IMU (3-axis gyroscope, 3-axis accelerometer)<br> - IMU data output on automotive CAN is supported |
 
-> :warning: The Bosch Radar Off-Highway Premium Radar Sample packages are considered legacy and may
-> be removed in a future release.
+Contact: [**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20MM7P10%20IMU)
 
-For further information, have a look at the linked package readmes.
+## Nodes
 
-## CAN Based Drivers
+### Receiver
 
-- [**off_highway_can**](off_highway_can/README.md): Library containing receiver and sender
-  classes to decode / encode sensor CAN frames
-- [**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md): Receiver
-  node for the Bosch General Purpose Radar Off-Highway (GPR)
-- [**off_highway_general_purpose_radar_msgs**](off_highway_general_purpose_radar_msgs/README.md):
-  The custom message interface for the Bosch General Purpose Radar Off-Highway (GPR)
-- [**off_highway_radar**](off_highway_radar/README.md): Receiver and sender nodes for the Bosch
-  Radar Off-Highway
-- [**off_highway_radar_msgs**](off_highway_radar_msgs/README.md): The custom message interface for
-  the off_highway_radar package
-- [**off_highway_uss**](off_highway_uss/README.md): Receiver and sender nodes for the Bosch
-  Ultrasonic Sensor System Off-Highway
-- [**off_highway_uss_msgs**](off_highway_uss_msgs/README.md): The custom message interface for the
-  off_highway_uss package
+The MM7.10 receiver decodes CAN frames into IMU data and publishes it as ROS sensor messages.
 
-The CAN communication based sensors were tested in a 500 kBd CAN configuration.
+The MM7.10 sends its data in three synchronized CAN frames (TX1, TX2, TX3) containing:
 
-The CAN communication based drivers offer the possibility to [log processing cycle
-times](off_highway_can/README.md). This allows you to check if your hardware in combination with
-these drivers is capable of processing your system's specific CAN load.
+- **TX1 (Z_AY)**: Yaw rate, lateral acceleration (Y), temperature, status bits
+- **TX2 (X_AX)**: Roll rate, longitudinal acceleration (X), status bits
+- **TX3 (Y_AZ)**: Pitch rate, vertical acceleration (Z), hardware index, status bits
 
-For further information, have a look at the linked package readmes.
+All three frames must be received with matching message counters before the data is published. If
+frames are missed or message counters don't match, a warning is logged and the data is not published.
 
-### Architecture
+The receiver validates message counters across the three frames to ensure synchronization. Messages
+with all-zero IMU values are filtered out as invalid.
 
-The most relevant packages for an application of the CAN communication based sensors are the
-[**off_highway_general_purpose_radar**](off_highway_general_purpose_radar/README.md),
-[**off_highway_radar**](off_highway_radar/README.md) and
-[**off_highway_uss**](off_highway_uss/README.md) packages, which provide a `receiver` node to
-convert CAN (FD) frames received from the sensor into ROS messages and a `sender` node to provide
-relevant information as CAN (FD) frames, converted from a ROS message interface.
+The IMU data is published as a standard `sensor_msgs/Imu` message. The orientation field is not
+populated (covariance set to -1), as the MM7.10 only provides angular velocities and linear
+accelerations, not orientation estimates.
 
-The sensor packages do **not** contain a CAN to ROS driver. Instead, their interface towards the
-sensor side are encoded as
-[`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html) or
-[`socketcan_msgs/FdFrame`](https://github.com/autowarefoundation/ros2_socketcan/blob/main/ros2_socketcan_msgs/msg/FdFrame.msg)
-ROS messages. Such messages can be handled by e.g., the
-[ros2_socketcan](https://github.com/autowarefoundation/ros2_socketcan) sender and receiver, which
-convert between such ROS messages and physical CAN (FD) frames through the SocketCAN driver. See the
-following diagram for a system overview:
+Additionally, diagnostic information including sensor status bits and temperature is published as an
+`Information` message and monitored for errors. If any status bits indicate an error (IMU not
+available, signal failure, or initialization in progress) or if the temperature is invalid, a
+diagnostic error is published on `/diagnostics`.
 
-![Sensor Driver Architecture](doc/media/system_setup.drawio.svg "Sensor Driver Architecture")
+If the receiver node does not receive any CAN messages within the configured timeout period, the watchdog will detect this
+and publish a diagnostic error on `/diagnostics`. The watchdog checks for timeouts at the frequency
+specified by `watchdog_frequency` (default 100 Hz).
 
-## Miscellaneous
+#### Subscribed Topics
 
-- [**off_highway_sensor_drivers_examples**](off_highway_sensor_drivers_examples/README.md): Sample
-  launch files and scripts to assist with further processing of sensor data.
+* **from_can_bus
+  ([`can_msgs/Frame`](http://docs.ros.org/en/noetic/api/can_msgs/html/msg/Frame.html))**
+  * MM7.10 CAN frames to decode
 
-For further information, have a look at the linked package readme.
+#### Published Topics
 
-## Further Information about the Hardware
+* **imu
+  ([`sensor_msgs/Imu`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/Imu.html))**
+  * Update Rate: On each complete set of synchronized CAN frames (typically 100 Hz), but only if IMU data is not all zeros
+  * Contains angular velocity (rad/s) and linear acceleration (m/s²) data from the MM7.10
+  * Orientation field is not used (covariance set to -1)
+  * Roll rate sign is inverted to match ROS coordinate system conventions
+* **info
+  ([`off_highway_mm7p10_msgs/Information`](../off_highway_mm7p10_msgs/msg/Information.msg))**
+  * Update Rate: On each complete set of synchronized CAN frames (when IMU is published)
+  * Contains current sensor status information including status bits for all channels (yaw, roll,
+    pitch rates and accelerations) and temperature data
+* **/diagnostics
+  ([`diagnostic_msgs/DiagnosticArray`](http://docs.ros.org/en/noetic/api/diagnostic_msgs/html/msg/DiagnosticArray.html))**
+  * Update Rate: On each complete set of synchronized CAN frames or when watchdog detects timeout
+  * Diagnostic status contains:
+    * Timeout status (monitored by watchdog timer at `watchdog_frequency`)
+    * Sensor status bits from all six channels (yaw, roll, pitch rates and X, Y, Z accelerations)
+    * Temperature validity status
 
-- [Radar OHW Premium](https://www.bosch-engineering.com/stories/imaging-radar-system/)
-- [Radar systems for off-highway
-  applications](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/radar-systems-ohw/)
-- [Ultrasonic system variants and
-  sensors](https://www.bosch-mobility-solutions.com/en/solutions/assistance-systems/ultrasonic-sensor-systems-ohw/)
+#### Parameters
 
-Or contact
-[**off-highway.beg@bosch.com**](mailto:off-highway.beg@bosch.com?subject=off_highway_sensor_drivers%20Hardware%20Question).
+See [receiver_params.yaml](config/receiver_params.yaml).
 
-## Intended Use
+## Launch files
 
-See [intended use](doc/intended_use.md).
-
-## License
-
-Please see [LICENSE](LICENSE).
-
-## Build
-
-### Install Dependencies
-
-Clone this repository into your workspace and execute in it:
-
-```bash
-rosdep update && rosdep install --from-paths src --ignore-src -r -y
-```
-
-### Compile
-
-Execute in your workspace
-
-```bash
-colcon build --cmake-args '-DCMAKE_BUILD_TYPE=Release'
-```
-
-for using colcon.
+* **[receiver_launch](launch/receiver_launch.py)**: Starts the receiver with the given parameters.
+  * Arguments:
+    * **params**: Path to ROS YAML parameter file to load for receiver. If not provided, default
+      parameters from this package are loaded.
