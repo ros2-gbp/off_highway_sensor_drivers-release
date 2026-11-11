@@ -218,7 +218,6 @@ private:
   TopicDiagnosticSharedPtr diag_locations_;
   TopicDiagnosticSharedPtr diag_sensor_feedback_;
   TopicDiagnosticSharedPtr diag_sensor_state_information_;
-  TopicDiagnosticSharedPtr diag_sensor_broadcast_;
   TopicDiagnosticSharedPtr diag_location_attributes_;
 
   struct Limit
@@ -228,11 +227,10 @@ private:
   };
 
   // Diagnosis timestamp and frequency limits (set in ctor)
-  static constexpr Limit diag_timestamps_{0.0, 0.1};
+  static constexpr Limit diag_timestamps_{0.0, 0.15};
   Limit diag_frequencies_locations_;
   Limit diag_frequencies_sensor_feedback_;
   Limit diag_frequencies_sensor_state_information_;
-  Limit diag_frequencies_sensor_broadcast_;
 };
 
 }  // namespace off_highway_premium_radar_sample
