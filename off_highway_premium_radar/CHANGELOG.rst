@@ -2,8 +2,8 @@
 Changelog for package off_highway_premium_radar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.4.0 (2026-11-02)
-------------------
+0.13.0 (2026-11-02)
+-------------------
 * Add extra validity check for locations
 
     An extra validation check was added to verify if the received location is a measured one or padding.
@@ -27,17 +27,17 @@ Changelog for package off_highway_premium_radar
     Applied to off_highway_premium_radar and off_highway_premium_radar_sample.
 * Contributors: Darius Man, David Mueller, Guilhem Saurel
 
-1.3.0 (2026-03-10)
-------------------
+0.12.0 (2026-03-10)
+-------------------
 * Update maintainers
 * Adapt README file
 * Contributors: Gabriela Adriana Lapuste, Robin Petereit
 
-1.2.0 (2026-01-26)
-------------------
+0.11.0 (2026-01-26)
+-------------------
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Remove PCL libraries from ohw_premium_radar
 * Add PCL deprecation warning for pcl_radar_point_type.hpp
 * Remove ament deprecation warning from remaining packages
@@ -48,7 +48,7 @@ Changelog for package off_highway_premium_radar
 * Add unit test for Location Data PDU
 * Contributors: Calin-Vasile Sopterean, Gabriela Adriana Lapuste
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Adapt expected frequencies of diagnostic messages
 * Adapt documentation of sensor state information

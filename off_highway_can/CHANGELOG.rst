@@ -2,8 +2,8 @@
 Changelog for package off_highway_can
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-1.4.0 (2026-11-02)
-------------------
+0.13.0 (2026-11-02)
+-------------------
 * Fix node termination without error log by adding try/catch
 
     Uncaught exceptions from malformed/manipulated CAN frames in callback_can() previously caused the node to terminate silently. This adds a try/catch block to handle the error gracefully, write to the error log, and keep the node running.
@@ -11,20 +11,20 @@ Changelog for package off_highway_can
     Tests were updated to reflect this change.
 * Contributors: Darius Man
 
-1.3.0 (2026-03-10)
-------------------
+0.12.0 (2026-03-10)
+-------------------
 * Update maintainers
 * Contributors: Robin Petereit
 
-1.2.0 (2026-01-26)
-------------------
+0.11.0 (2026-01-26)
+-------------------
 * Adapt unit tests to reflect the CPU high load fix
 * Add force diagnostic update on timeout state transition
-* Fix very high CPU usage since it publishes diagnostics on EACH CAN message (#26)
+* Fix very high CPU usage since it publishes diagnostics on EACH CAN me… (#29)
 * Contributors: Ferry Schoenmakers, Gabriela Adriana Lapuste
 
-1.1.0 (2025-11-12)
-------------------
+0.10.0 (2025-11-12)
+-------------------
 * Fix formatting for linter
 * off_highway_can: split license element into two
 
@@ -48,11 +48,10 @@ Changelog for package off_highway_can
 * Draw conclusion in the watchdog, not in the diagnostics callback
 * Fix issue 20, don't publish sensor data when there is a sensor timeout
 * ament_target_dependencies is deprecated for Kilted and Rolling
-
-    This syntax should work as of ROS 2 Foxy already
+  This syntax should work as of ROS 2 Foxy already
 * Contributors: Calin-Vasile Sopterean, Ferry Schoenmakers, Jan Vermaete, Tim Clephas
 
-1.0.0 (2025-07-01)
+0.9.0 (2025-06-16)
 ------------------
 * Use lround and explicit cast
 * Fix integer inputs for round test

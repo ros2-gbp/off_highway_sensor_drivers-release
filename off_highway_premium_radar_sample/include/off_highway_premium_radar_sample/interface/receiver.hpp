@@ -32,8 +32,7 @@ public:
   /**
    * \brief Destructor
    */
-  virtual
-  ~Receiver() = default;
+  virtual ~Receiver() = default;
 
   /**
    * \brief Called from receiving thread on receiving a full location data measurement
